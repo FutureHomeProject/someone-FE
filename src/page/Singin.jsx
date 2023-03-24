@@ -15,8 +15,11 @@ function Singin() {
         <input type="text" placeholder='이메일'/>
         <input type="password" placeholder='비밀번호'/>
         <BlueButton innerText="로그인" width="100%" height="40px" color="white"/>
-        {/* ({innerText, width, height, color}) */}
       </Form>
+      <StyleDiv2>
+        <div>비밀번호재설정</div>
+        <div>회원가입</div>
+      </StyleDiv2>
     </Layout>
   )
 }
@@ -34,6 +37,13 @@ const StyleDiv = styled.div`
     border-radius: 10px;
   }
 `
+const StyleDiv2 = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+  font-size: .8rem;
+`
 
 const StyleP = styled.div`
   font-family: "Jal_Onuel";
@@ -45,7 +55,9 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   width: 250px;
-  margin: 30px auto;
+  margin: 0 auto;
+  margin-top: 30px;
+  
 
   input {
     display: block;
