@@ -31,7 +31,7 @@ function Header() {
                 <div><RxMagnifyingGlass /></div>
                 <div><BsCart /></div>
                 <div className="authorization line" onClick={()=>navigate("/signin")}>로그인</div>
-                <div className="authorization">회원가입</div>
+                <div className="authorization" onClick={()=>navigate("/signup")}>회원가입</div>
               </div>
 
             </NavTop>

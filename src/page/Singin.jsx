@@ -1,13 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { Layout } from '../App'
 import { BlueButton } from '../components/CommenButton'
 import SomeoneHou from '../img/SomeoneHou.png'
 
 function Singin() {
+  const navigate = useNavigate();
   return (
     <Layout>
-      <StyleDiv>
+      <StyleDiv onClick={()=>navigate("/")}>
         <img src={SomeoneHou} width="50px"></img>
         <StyleP>누군가의집</StyleP>
       </StyleDiv>
@@ -17,8 +19,8 @@ function Singin() {
         <BlueButton innerText="로그인" width="100%" height="40px" color="white"/>
       </Form>
       <StyleDiv2>
-        <div>비밀번호재설정</div>
-        <div>회원가입</div>
+        <div>비밀번호 재설정</div>
+        <div onClick={()=>navigate("/signup")}>회원가입</div>
       </StyleDiv2>
     </Layout>
   )

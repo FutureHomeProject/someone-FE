@@ -4,46 +4,61 @@ import styled from 'styled-components';
 
 // Login - input parts //////////////////////////////////////////////////////
 const inputHeigt = "40px"
-export const EmailInput = ({value,onChange}) => {
+export const EmailInput = ({title, name,validate,value,onChange}) => {
   return (
-    <Input 
-        required
-        heigth={inputHeigt}
-        type="email"
-        value={value}
-        onChange={onChange}
-        placeholder="이메일을 입력해주세요(exemple@gmail.com)"
+        <>
+        <Title>{title}</Title>
+        <Validate>{validate}</Validate>
+        <Input 
+            heigth={inputHeigt}
+            name={name}
+            type="email"
+            value={value}
+            onChange={onChange}
+            placeholder="이메일을 입력해주세요"
         />
+        </>
   )
 }
 
-export const PasswordInput = ({value,onChange, text}) => {
+export const PasswordInput = ({title, name, validate, conform, value,onChange}) => {
   return (
-    <Input 
-        required
-        heigth={inputHeigt}
-        type="password"
-        value={value}
-        onChange={onChange}
-        placeholder={text}
+        <>
+        <Title conform={conform}>{title}</Title>
+        <Validate conform={conform}>{validate || conform}</Validate>
+        <Input 
+            heigth={inputHeigt}
+            name={name}
+            type="password"
+            value={value}
+            onChange={onChange}
+            minLength="8"
+            conform={conform}
+            placeholder= {title  === "비밀번호" ? "비밀번호" : "비밀번호 확인"}
+            
         />
+        </>
   )
 }
 
-export const TextInput = ({value,onChange, text}) => {
+export const TextInput = ({title, name, validate,value,onChange}) => {
   return (
-    <Input 
-        required
-        heigth={inputHeigt}
-        type="text"
-        value={value}
-        onChange={onChange}
-        placeholder={text}
+        <>
+        <Title>{title}</Title>
+        <Validate>{validate}</Validate>
+        <Input 
+            heigth={inputHeigt}
+            name={name}
+            type="email"
+            value={value}
+            onChange={onChange}
+            placeholder="별명(2-15자)"
+            minLength="2"
+            maxLength="15"
         />
+        </>
   )
 }
-
-export default CommenInputl;
 
 // Styled-components /////////////////////////////////////////////////////////
 const Input = styled.input`
@@ -52,4 +67,22 @@ const Input = styled.input`
   padding: 0 10px;
   background: #FCF5F6;
   font-size: .8rem;
+  border : ${props=> props.conform === "동일한 비밀번호를 입력해주세요." ? "1px solid red" : "none"};
+  border-radius : ${props=> props.conform === "동일한 비밀번호를 입력해주세요." ? "5px" : "none"};
+`
+
+
+const Title = styled.p`
+  margin: 0;
+  margin-top: 20px;
+  color: ${props=> props.conform === "동일한 비밀번호를 입력해주세요." ? "red" : "black"};
+`
+
+const Validate = styled.p`
+  color: gray;
+  font-size: .7rem;
+  color: ${props=> props.conform === "동일한 비밀번호를 입력해주세요." ? "red" : "gray"};
+`
+
+const Div = styled.div`
 `
