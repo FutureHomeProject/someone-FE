@@ -29,7 +29,7 @@
   - path: “/houst/:id” 	 HouseDetail.jsx(HouseDetailDiv.jsx)  : 집들이 게시물 상세페이지 
   - path: “/signin”	     Singin.jsx(CommenInput.jsx)          : 로그인 페이지 
   - path: “/signup”	     Signup.jsx(CommenInput.jsx)          : 회원가입 페이지
-  - path: "/scrap"        Scrap.jsx                             : 스크랩 페이지 
+  - path: "/scrap"       Scrap.jsx                             : 스크랩 페이지 
   - path: "/error"       Error.jsx                            : 에러페이지에 대해서 알아보기 
     (1) https://velog.io/@dev_kdh/42gg-에러-페이지-구현하기
 
@@ -50,6 +50,9 @@
 
   #### 05) 03월 24일 - 금요일 작업일지
   - Header, Footer 컴포넌트 공동제작
+   .trouble -> git issue -> push가 안대 머지와 리베이스등을 했지만 해결이 안 됐고
+               레포지토리 다시 파서 해결했습니다. 
+   .trouble -> header 에 있는 커뮤니티와 쇼핑 클릭 했을 때의 액션상황 효율적인 관리 
   - 로그인, 회원가입 - useInput() 훅사용 
 
   #### 10) react-icons
@@ -61,4 +64,4 @@
   - 생성자 함수 선언 후 
   -  토큰 유무에 따라 상황을 설정한다.
 
-  ### 12 ㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+  

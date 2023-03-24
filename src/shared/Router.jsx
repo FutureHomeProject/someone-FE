@@ -9,14 +9,11 @@ import Singin from '../page/Singin';
 import Signup from '../page/Signup';
 import Error from '../page/Error'
 import Scrap from "../page/Scrap"
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 
 const Router = () => {
     return (
         <BrowserRouter>
-            <Header/>
             <Routes>
                 <Route path="/" element={<Main />} />
                 <Route path="/detail/:id" element={<MainDetail />} />
@@ -28,7 +25,6 @@ const Router = () => {
                 <Route path="/scrap" element={<Scrap />} />
                 <Route path="/error" element={<Error />} />
             </Routes>
-            <Footer/>
         </BrowserRouter>
     )
 }
