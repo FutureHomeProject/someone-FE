@@ -19,35 +19,80 @@ function Singup() {
     setSignup({...signup, [name]:value})
   }
 
-
   let conformpassword = ''
   if(password != conformPassword) {
     conformpassword = "동일한 비밀번호를 입력해주세요." 
   }
+
+  //이메일유효성검사
+  const emailCheck = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._]+\.[a-zA-Z](2,)$/;
   
 
   return (
     <Layout>
-      <StyleDiv onClick={()=>navigate("/")}>
+      <StyleDiv onClick={() => navigate("/")}>
         <img src={SomeoneHou} width="50px"></img>
         <StyleP>누군가의집</StyleP>
       </StyleDiv>
-      <Form onSubmit={(e)=>e.preventDefault()}>
+      <Form onSubmit={(e) => e.preventDefault()}>
         <p>회원가입</p>
-        <EmailInput title="이메일" name="email" value={signup.email} onChange={onChangeHandler} validate="이메일 형식으로 기입해주세요."/>
-        <BlueButton type="button" innerText="중복확인" width="100%" height="40px" color="white" onClick={()=>alert("중복확인")}/>
-        <PasswordInput title="비밀번호" name="password" value={password} onChange={(e)=>setPassWord(e.target.value)} validate="영문, 특수문자, 숫자를 포함한 8자 이상을 입력해주세요."/>
-        <PasswordInput title="비밀번호 확인" name="conformPassword" value={conformPassword} onChange={(e)=>setConformPassword(e.target.value)} conform={conformpassword}/>
-        <TextInput title="닉네임" name="nickname" value={signup.nickname} onChange={onChangeHandler} validate="다른 유저와 겹치지 않도록 입력해주세요(2-15자)"/>
-        <BlueButton type="button" innerText="중복확인" width="100%" height="40px" color="white" onClick={()=>alert("중복확인")}/>
-        <BlueButton innerText="회원가입" width="100%" height="40px" color="white"/>
+        <EmailInput
+          title="이메일"
+          name="email"
+          value={signup.email}
+          onChange={onChangeHandler}
+          validate="이메일 형식으로 기입해주세요."
+        />
+        <BlueButton
+          type="button"
+          innerText="중복확인"
+          width="100%"
+          height="40px"
+          color="white"
+          onClick={() => alert("중복확인")}
+        />
+        <PasswordInput
+          title="비밀번호"
+          name="password"
+          value={password}
+          onChange={(e) => setPassWord(e.target.value)}
+          validate="영문, 특수문자, 숫자를 포함한 8자 이상을 입력해주세요."
+        />
+        <PasswordInput
+          title="비밀번호 확인"
+          name="conformPassword"
+          value={conformPassword}
+          onChange={(e) => setConformPassword(e.target.value)}
+          conform={conformpassword}
+        />
+        <TextInput
+          title="닉네임"
+          name="nickname"
+          value={signup.nickname}
+          onChange={onChangeHandler}
+          validate="다른 유저와 겹치지 않도록 입력해주세요(2-15자)"
+        />
+        <BlueButton
+          type="button"
+          innerText="중복확인"
+          width="100%"
+          height="40px"
+          color="white"
+          onClick={() => alert("중복확인")}
+        />
+        <BlueButton
+          innerText="회원가입"
+          width="100%"
+          height="40px"
+          color="white"
+        />
       </Form>
       <StyleDiv2>
         <div>이미 아이디가 있으신가요?</div>
-        <div onClick={()=>navigate("/signin")}>로그인</div>
+        <div onClick={() => navigate("/signin")}>로그인</div>
       </StyleDiv2>
     </Layout>
-  )
+  );
 }
 
 export default Singup
@@ -101,6 +146,5 @@ const Form = styled.form`
     border-radius: 0 0 5px 5px;
     border: 1px solid gray;
   }
-
-
 `
+
