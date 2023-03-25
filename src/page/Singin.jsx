@@ -1,13 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { Layout } from '../App'
 import { BlueButton } from '../components/CommenButton'
+import { cookies } from '../components/Header'
 import { useValidate } from '../hook/useValidate'
 import SomeoneHou from '../img/SomeoneHou.png'
 import { __postsignin } from '../redux/modules/authorization'
-
 
 function Singin() {
   const navigate = useNavigate();
@@ -20,6 +20,14 @@ function Singin() {
     await dispatch(__postsignin({email, password}))
     navigate('/')
   }
+
+  useEffect(()=> {
+    const token = cookies.get('token')
+    if(token) {
+      navigate('/')
+    }
+  })
+
     return (
     <Layout>
       <StyleDiv onClick={()=>navigate("/")}>
