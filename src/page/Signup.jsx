@@ -23,6 +23,7 @@ function Singup() {
      if(emailValidate && passwordValidate && checkpwvalidate && otherValidate) {
       await dispatch(__postsignup({email, password, nickname}))
       navigate("/signin")
+      
      } else {
       alert("입력되지 않은 내용이 있습니다.")
      }

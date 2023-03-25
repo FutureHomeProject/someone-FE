@@ -22,6 +22,5 @@ export const useValidate = ({type, check}) => {
       return [inputValidate, onChangeHandler, otherValidate]
     default:
       return [inputValidate, onChangeHandler, setInputValidate]
-      
     }
 }
