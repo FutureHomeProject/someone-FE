@@ -4,29 +4,17 @@ import styled from 'styled-components'
 import { Layout } from '../App'
 import { BlueButton } from '../components/CommenButton'
 import { EmailInput, PasswordInput, TextInput } from '../components/CommenInput'
+import { useValidate } from '../hook/useValidate'
 import SomeoneHou from '../img/SomeoneHou.png'
 
 function Singup() {
   const navigate = useNavigate();
-  const [signup, setSignup] = useState({
-    email:'',
-    nickname:''
-  })
-  const [password, setPassWord] = useState('')
-  const [conformPassword, setConformPassword] = useState('')
-  const onChangeHandler = (e) => {
-    const {name, value} = e.target;
-    setSignup({...signup, [name]:value})
-  }
 
-  let conformpassword = ''
-  if(password != conformPassword) {
-    conformpassword = "동일한 비밀번호를 입력해주세요." 
-  }
-
-  //이메일유효성검사
-  const emailCheck = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9._]+\.[a-zA-Z](2,)$/;
-  
+  const [email, onChangeEmail, emailValidate] = useValidate({type:"email"})
+  const [password, onChangePassword, passwordValidate] = useValidate({type:"password"})
+  const [conformpw, onChangePw, checkpwvalidate] = useValidate({type:"checkpw", check:password})
+  const [nickname, onChangenickname, otherValidate] = useValidate({type:"other"})
+  console.log(otherValidate);
 
   return (
     <Layout>
@@ -39,9 +27,16 @@ function Singup() {
         <EmailInput
           title="이메일"
           name="email"
-          value={signup.email}
-          onChange={onChangeHandler}
-          validate="이메일 형식으로 기입해주세요."
+          value={email}
+          conform={emailValidate}
+          onChange={onChangeEmail}
+          validate={
+            email === "" && !emailValidate
+              ? "이메일 형식으로 기입해주세요"
+              : email != "" && !emailValidate
+              ? "이메일 형식으로 기입해주세요"
+              : "올바른 이메일 형식입니다."
+          }
         />
         <BlueButton
           type="button"
@@ -55,21 +50,37 @@ function Singup() {
           title="비밀번호"
           name="password"
           value={password}
-          onChange={(e) => setPassWord(e.target.value)}
-          validate="영문, 특수문자, 숫자를 포함한 8자 이상을 입력해주세요."
+          conform={passwordValidate}
+          onChange={onChangePassword}
+          validate={
+            password === "" && !passwordValidate
+              ? "영문, 특수문자, 숫자를 포함한 8자 이상을 입력해주세요."
+              : password != "" && !passwordValidate
+              ? "영문, 특수문자, 숫자를 포함한 8자 이상을 입력해주세요."
+              : "올바른 비밀번호 형식입니다."
+          }
         />
         <PasswordInput
           title="비밀번호 확인"
           name="conformPassword"
-          value={conformPassword}
-          onChange={(e) => setConformPassword(e.target.value)}
-          conform={conformpassword}
+          value={conformpw}
+          conform={checkpwvalidate}
+          onChange={onChangePw}
+          validate={
+            conformpw === "" && !checkpwvalidate
+              ? "동일한 비밀번호를 입력해주세요"
+              : conformpw != "" && !checkpwvalidate
+              ? "동일한 비밀번호를 입력해주세요"
+              : "위의 비밀번호와 일치합니다."
+          }
+          
         />
         <TextInput
           title="닉네임"
           name="nickname"
-          value={signup.nickname}
-          onChange={onChangeHandler}
+          value={nickname}
+          conform={otherValidate}
+          onChange={onChangenickname}
           validate="다른 유저와 겹치지 않도록 입력해주세요(2-15자)"
         />
         <BlueButton
