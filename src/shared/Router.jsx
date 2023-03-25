@@ -9,7 +9,6 @@ import Singin from '../page/Singin';
 import Signup from '../page/Signup';
 import Error from '../page/Error'
 import Scrap from "../page/Scrap"
-import SimpleSlider from "../components/Slider";
 
 
 const Router = () => {
@@ -25,7 +24,6 @@ const Router = () => {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/scrap" element={<Scrap />} />
                 <Route path="/error" element={<Error />} />
-                <Route path="/simpleSlider" element={<simpleSlider />} />
             </Routes>
         </BrowserRouter>
     )

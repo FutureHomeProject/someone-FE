@@ -59,6 +59,11 @@
  - 로그인, 회원가입 페이지 완성하기
  - 뷰는 완성, 기능구현을 위해서 db.json 서버 활용
 
+  ##### 이미지 슬라이더 관련 부분
+  라이브러리는 npm install react-slick 하나만 설치하면 되는 것 같다. 
+  - "react-slick": "^0.29.0",
+  - "slick-carousel": "^1.8.1",
+
 
 
   #### 10) react-icons
