@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RxMagnifyingGlass } from 'react-icons/rx'
 import { BsCart } from 'react-icons/bs'
 import { CgProfile } from 'react-icons/cg'
@@ -10,8 +10,17 @@ import { useNavigate } from 'react-router-dom'
 export const cookies = new Cookies()
 
 function Header() {
+  const [signout, setSignout] = useState(false)
   const token = cookies.get('token')
   const navigate = useNavigate();
+  const onsignout = () => {
+    cookies.remove('token')
+    setSignout(pre => !pre)
+  }
+
+  const onWrite = () => {
+    navigate('/House')
+  }
 
 
   return (
@@ -28,8 +37,10 @@ function Header() {
               </div>
 
               <div>
-                <div><RxMagnifyingGlass /></div>
-                <div><BsCart /></div>
+                <div>
+                  <div><RxMagnifyingGlass /></div>
+                  <div><BsCart /></div>
+                </div> 
                 <div className="authorization line" onClick={()=>navigate("/signin")}>로그인</div>
                 <div className="authorization" onClick={()=>navigate("/signup")}>회원가입</div>
               </div>
@@ -59,9 +70,10 @@ function Header() {
                   <BsCart />
                 </div>
                 <div>{CgProfile}</div>
-                <div>
+                <div onClick={onsignout}>로그아웃</div>
+                <div onClick={onWrite}>
                   <BlueButton
-                    width="60px"
+                    width="70px"
                     height="40px"
                     color="white"
                     innerText="글쓰기"
@@ -82,7 +94,7 @@ function Header() {
 }
 
 export default Header
-const HeaderDiv = styled.header`
+export const HeaderDiv = styled.header`
   position: sticky;
   top:-1px;
   background-color: white;
@@ -91,7 +103,7 @@ const HeaderDiv = styled.header`
   border-bottom: 1px solid gray;
 `
 
-const NavTop = styled.nav`
+export const NavTop = styled.nav`
   width: 100%;
   display: grid;
   grid-template-columns: 120px 1fr 400px;
@@ -126,37 +138,10 @@ const NavTop = styled.nav`
   .line {
   }
 `
-const NavBottom = styled.nav`
+export const NavBottom = styled.nav`
   display: flex;
   gap: 10px;
   border-bottom: 1px solid gray;
   padding: 10px 0;
   margin: 0;
 `
-
- {/* <HeaderDiv>
-          <NavTop>
-            <div className="logo">누군가의집</div>
-            <div>
-              <div>커뮤니티</div>
-              <div>쇼핑</div>
-            </div>
-            <div>
-              <div>
-                <RxMagnifyingGlass />
-              </div>
-              <div>
-                <BsCart />
-              </div>
-              <div>{CgProfile}</div>
-              <div>
-                <BlueButton width="60px" height="40px" color="white" innerText="글쓰기" />
-              </div>
-            </div>
-          </NavTop>
-          </HeaderDiv>
-
-          <NavBottom>
-        <div>쇼핑홈</div>
-        <div>카테고리</div>
-      </NavBottom> */}

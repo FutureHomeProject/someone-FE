@@ -4,16 +4,17 @@ import styled from 'styled-components';
 
 // Login - input parts //////////////////////////////////////////////////////
 const inputHeigt = "40px"
-export const EmailInput = ({title, name,validate,value,onChange}) => {
+export const EmailInput = ({title, name, validate, conform, value, onChange}) => {
   return (
         <>
-        <Title>{title}</Title>
-        <Validate>{validate}</Validate>
+        <Title value={value} conform={conform}>{title}</Title>
+        <Validate value={value} conform={conform}>{validate}</Validate>
         <Input 
             heigth={inputHeigt}
             name={name}
             type="email"
             value={value}
+            conform={conform}
             onChange={onChange}
             placeholder="이메일을 입력해주세요"
         />
@@ -21,19 +22,19 @@ export const EmailInput = ({title, name,validate,value,onChange}) => {
   )
 }
 
-export const PasswordInput = ({title, name, validate, conform, value,onChange}) => {
+export const PasswordInput = ({title, name, validate, conform, value, onChange}) => {
   return (
         <>
-        <Title conform={conform}>{title}</Title>
-        <Validate conform={conform}>{validate || conform}</Validate>
+        <Title value={value} conform={conform}>{title}</Title>
+        <Validate value={value} conform={conform}>{validate}</Validate>
         <Input 
             heigth={inputHeigt}
             name={name}
             type="password"
             value={value}
+            conform={conform}
             onChange={onChange}
             minLength="8"
-            conform={conform}
             placeholder= {title  === "비밀번호" ? "비밀번호" : "비밀번호 확인"}
             
         />
@@ -41,17 +42,18 @@ export const PasswordInput = ({title, name, validate, conform, value,onChange}) 
   )
 }
 
-export const TextInput = ({title, name, validate,value,onChange}) => {
+export const TextInput = ({title, name, validate,value, conform, onChange}) => {
   return (
         <>
-        <Title>{title}</Title>
-        <Validate>{validate}</Validate>
+        <Title value={value} conform={conform}>{title}</Title>
+        <Validate value={value} conform={conform}>{validate}</Validate>
         <Input 
             heigth={inputHeigt}
             name={name}
-            type="email"
+            type="text"
             value={value}
             onChange={onChange}
+            conform={conform}
             placeholder="별명(2-15자)"
             minLength="2"
             maxLength="15"
@@ -63,26 +65,46 @@ export const TextInput = ({title, name, validate,value,onChange}) => {
 // Styled-components /////////////////////////////////////////////////////////
 const Input = styled.input`
   display: block;
-  height: ${props => props.inputHeigt};
+  height: ${(props) => props.inputHeigt};
   padding: 0 10px;
-  background: #FCF5F6;
-  font-size: .8rem;
-  border : ${props=> props.conform === "동일한 비밀번호를 입력해주세요." ? "1px solid red" : "none"};
-  border-radius : ${props=> props.conform === "동일한 비밀번호를 입력해주세요." ? "5px" : "none"};
-`
+  background: #fcf5f6;
+  font-size: 0.8rem;
+  border: ${(props) =>
+    props.value === "" && !props.conform
+      ? "none"
+      : props.value !== "" && !props.conform
+      ? "2px solid red"
+      : "none"};
+  border-radius: ${(props) =>
+    props.value === "" && !props.conform
+      ? "none"
+      : props.value !== "" && !props.conform
+      ? "5px"
+      : "none"};
+  &:focus {
+    outline: none;
+  }
+`;
 
 
 const Title = styled.p`
   margin: 0;
   margin-top: 20px;
-  color: ${props=> props.conform === "동일한 비밀번호를 입력해주세요." ? "red" : "black"};
+  color: ${(props) =>
+    props.value === "" && !props.conform
+      ? "black"
+      : props.value !== "" && !props.conform
+      ? "red"
+      : "black"};
 `
 
 const Validate = styled.p`
   color: gray;
-  font-size: .7rem;
-  color: ${props=> props.conform === "동일한 비밀번호를 입력해주세요." ? "red" : "gray"};
-`
-
-const Div = styled.div`
-`
+  font-size: 0.7rem;
+  color: ${(props) =>
+    props.value === "" && !props.conform
+      ? "black"
+      : props.value !== "" && !props.conform
+      ? "red"
+      : "black"};
+`;
