@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { Layout } from '../App'
@@ -6,23 +7,29 @@ import { BlueButton } from '../components/CommenButton'
 import { EmailInput, PasswordInput, TextInput } from '../components/CommenInput'
 import { useValidate } from '../hook/useValidate'
 import SomeoneHou from '../img/SomeoneHou.png'
+import { __postsignup } from '../redux/modules/authorization'
 
 function Singup() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [email, onChangeEmail, emailValidate] = useValidate({type:"email"})
-  const [password, onChangePassword, passwordValidate] = useValidate({type:"password"})
-  const [conformpw, onChangePw, checkpwvalidate] = useValidate({type:"checkpw", check:password})
-  const [nickname, onChangenickname, otherValidate] = useValidate({type:"other"})
-  console.log(otherValidate);
+  const [email, onChangeEmail, emailValidate] = useValidate({type:"email"});
+  const [password, onChangePassword, passwordValidate] = useValidate({type:"password"});
+  const [conformpw, onChangePw, checkpwvalidate] = useValidate({type:"checkpw", check:password});
+  const [nickname, onChangenickname, otherValidate] = useValidate({type:"other"});
+
+  const onSubmitSingup = async (e) => {
+     e.preventDefault();
+     await dispatch(__postsignup({email, password, nickname}))
+  };
 
   return (
     <Layout>
       <StyleDiv onClick={() => navigate("/")}>
-        <img src={SomeoneHou} width="50px"></img>
+        <img src={SomeoneHou} width="50px" alt='logo'></img>
         <StyleP>누군가의집</StyleP>
       </StyleDiv>
-      <Form onSubmit={(e) => e.preventDefault()}>
+      <Form onSubmit={onSubmitSingup}>
         <p>회원가입</p>
         <EmailInput
           title="이메일"
@@ -33,7 +40,7 @@ function Singup() {
           validate={
             email === "" && !emailValidate
               ? "이메일 형식으로 기입해주세요"
-              : email != "" && !emailValidate
+              : email !== "" && !emailValidate
               ? "이메일 형식으로 기입해주세요"
               : "올바른 이메일 형식입니다."
           }
@@ -55,7 +62,7 @@ function Singup() {
           validate={
             password === "" && !passwordValidate
               ? "영문, 특수문자, 숫자를 포함한 8자 이상을 입력해주세요."
-              : password != "" && !passwordValidate
+              : password !== "" && !passwordValidate
               ? "영문, 특수문자, 숫자를 포함한 8자 이상을 입력해주세요."
               : "올바른 비밀번호 형식입니다."
           }
@@ -69,7 +76,7 @@ function Singup() {
           validate={
             conformpw === "" && !checkpwvalidate
               ? "동일한 비밀번호를 입력해주세요"
-              : conformpw != "" && !checkpwvalidate
+              : conformpw !== "" && !checkpwvalidate
               ? "동일한 비밀번호를 입력해주세요"
               : "위의 비밀번호와 일치합니다."
           }

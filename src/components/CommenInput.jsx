@@ -50,7 +50,7 @@ export const TextInput = ({title, name, validate,value, conform, onChange}) => {
         <Input 
             heigth={inputHeigt}
             name={name}
-            type="email"
+            type="text"
             value={value}
             onChange={onChange}
             conform={conform}
@@ -72,13 +72,13 @@ const Input = styled.input`
   border: ${(props) =>
     props.value === "" && !props.conform
       ? "none"
-      : props.value != "" && !props.conform
+      : props.value !== "" && !props.conform
       ? "2px solid red"
       : "none"};
   border-radius: ${(props) =>
     props.value === "" && !props.conform
       ? "none"
-      : props.value != "" && !props.conform
+      : props.value !== "" && !props.conform
       ? "5px"
       : "none"};
   &:focus {
@@ -93,7 +93,7 @@ const Title = styled.p`
   color: ${(props) =>
     props.value === "" && !props.conform
       ? "black"
-      : props.value != "" && !props.conform
+      : props.value !== "" && !props.conform
       ? "red"
       : "black"};
 `
@@ -104,10 +104,7 @@ const Validate = styled.p`
   color: ${(props) =>
     props.value === "" && !props.conform
       ? "black"
-      : props.value != "" && !props.conform
+      : props.value !== "" && !props.conform
       ? "red"
       : "black"};
 `;
-
-const Div = styled.div`
-`
