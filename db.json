@@ -2,72 +2,75 @@
   "signup": [
     {
       "id": 1,
+      "email": "g@g.com",
       "password": "a!12345678",
       "nickname": "Edwin"
     },
     {
       "email": "gg@g.com",
-      "password": "a!1234567",
+      "password": "a!12345678",
       "nickname": "edwin",
       "id": 2
     },
     {
       "email": "gg@g.com",
-      "password": "a!1234567",
+      "password": "a!12345678",
       "nickname": "edwin",
       "id": 3
     },
     {
       "email": "gg@g.com",
-      "password": "a!1234567",
+      "password": "a!12345678",
       "nickname": "edwin",
       "id": 4
     },
     {
       "email": "gg@g.com",
-      "password": "a!1234567",
+      "password": "a!12345678",
       "nickname": "edwin",
       "id": 5
     },
     {
-      "email": "dd",
-      "password": "",
+      "email": "gg@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
       "id": 6
     },
     {
-      "email": "dd",
-      "password": "",
+      "email": "gg@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
       "id": 7
     },
     {
-      "email": "dd",
-      "password": "",
+      "email": "g@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
       "id": 8
     },
     {
       "email": "gg@g.com",
-      "password": "qq",
+      "password": "a!12345678",
+      "nickname": "edwin",
       "id": 9
     },
     {
-      "email": "dd@g.com",
-      "password": "123",
+      "email": "gg@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
       "id": 10
     },
     {
       "email": "gg@g.com",
-      "password": "asdf",
+      "password": "a!12345678",
+      "nickname": "edwin",
       "id": 11
     },
     {
-      "email": "gg@g.con",
-      "password": "asdf",
-      "id": 12
-    },
-    {
       "email": "gg@g.com",
-      "password": "asdf",
-      "id": 13
+      "password": "a!12345678",
+      "nickname": "edwindddddfdfdf",
+      "id": 12
     }
   ],
   "comments": [

@@ -10,7 +10,6 @@ import Signup from '../page/Signup';
 import Error from '../page/Error'
 import Scrap from "../page/Scrap"
 
-
 const Router = () => {
     return (
         <BrowserRouter>

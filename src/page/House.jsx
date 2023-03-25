@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
 import { BlueButton } from '../components/CommenButton'
-import { HeaderDiv, NavTop } from '../components/Header'
 import {BsTextParagraph, BsPencilSquare} from 'react-icons/bs'
 import {SlArrowDown,SlArrowUp } from 'react-icons/sl'
 import { useNavigate } from 'react-router-dom';
+import { HeaderDiv, NavTop } from '../css/commenCss.jsx'
 
 function House() {
   const navigate = useNavigate()

@@ -2,23 +2,51 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { Layout } from '../App'
+import { Layout } from '../css/commenCss.jsx'
 import { BlueButton } from '../components/CommenButton'
 import { cookies } from '../components/Header'
 import { useValidate } from '../hook/useValidate'
 import SomeoneHou from '../img/SomeoneHou.png'
 import { __postsignin } from '../redux/modules/authorization'
+import { useMutation } from 'react-query'
+import axios from 'axios'
+import Cookies from 'universal-cookie'
+
 
 function Singin() {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
   const [email, onChangeEmail] = useValidate({type:"other"})
   const [password, onChangepassword] = useValidate({type:"other"})
 
+  const { mutate: signin } = useMutation({
+    mutationFn : async (user) => {
+      const data = await axios.post(`${process.env.REACT_APP_SERVER_KEY}/users/login`, user) 
+      const cookies = new Cookies();
+      cookies.set('token', data.headers.authorization.split(" ")[1])
+      return data.status
+    },
+    onSuccess: (data) => {
+      switch (data) {
+        case 200 :
+            console.log("로그인 성공")
+            const token = cookies.get('token')
+            if(token) {
+              navigate("/")
+            }
+          return 
+        default :
+          return  
+      }
+      // 성공적으로 데이터를 업데이트한 후 실행될 로직을 작성합니다.
+    },
+    onError: (error) => {
+      console.log(error.response.message)
+      // 에러 발생 시 실행될 로직을 작성합니다.
+  }})
+
   const onSubmitSignin = async (e) => {
     e.preventDefault();
-    await dispatch(__postsignin({email, password}))
-    navigate('/')
+    await signin({email, password})
   }
 
   useEffect(()=> {
@@ -27,6 +55,8 @@ function Singin() {
       navigate('/')
     }
   })
+
+  
 
     return (
     <Layout>
@@ -77,7 +107,7 @@ const StyleP = styled.div`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 250px;
+  width: 400px;
   margin: 0 auto;
   margin-top: 30px;
   
@@ -85,7 +115,7 @@ const Form = styled.form`
   input {
     display: block;
     margin: 0;
-    height: 40px;
+    height: 60px;
     padding: 0 10px;
   }
   input:nth-child(1) {

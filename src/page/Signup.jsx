@@ -1,29 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
-import { Layout } from '../App'
+import { Layout } from '../css/commenCss.jsx'
 import { BlueButton } from '../components/CommenButton'
-import { EmailInput, PasswordInput, TextInput } from '../components/CommenInput'
+import { CommenInput } from '../components/CommenInput'
 import { useValidate } from '../hook/useValidate'
 import SomeoneHou from '../img/SomeoneHou.png'
 import { __postsignup } from '../redux/modules/authorization'
+import { StyleDiv, StyleDiv2, StyleP,Form } from '../css/commenCss.jsx'
+import { useMutation } from 'react-query'
+import axios from 'axios'
+import styled from 'styled-components'
+import success from '../img/signup/success.png'
 
 function Singup() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [email, onChangeEmail, emailValidate] = useValidate({type:"email"});
   const [password, onChangePassword, passwordValidate] = useValidate({type:"password"});
   const [conformpw, onChangePw, checkpwvalidate] = useValidate({type:"checkpw", check:password});
   const [nickname, onChangenickname, otherValidate] = useValidate({type:"nickname"});
+  const [modal, setModal] = useState(false)
+  const [errmodal, setErrModal] = useState(false)
+  const [errormsg, setErrormsge] = useState('')
+
+  const { mutate: register } = useMutation({
+    mutationFn : async (user) => {
+      const data = await axios.post(`${process.env.REACT_APP_SERVER_KEY}/users/signup`, user) 
+      return data.status
+    },
+    onSuccess: (data) => {
+      switch (data) {
+        case 200 :
+            setModal(pre=>!pre);
+          return 
+        default :
+          return  
+      }
+      // 성공적으로 데이터를 업데이트한 후 실행될 로직을 작성합니다.
+    },
+    onError: (error) => {
+      setErrModal(pre=>!pre)
+      setErrormsge(error.response.data.message);
+      // 에러 발생 시 실행될 로직을 작성합니다.
+  }})
 
   const onSubmitSingup = async (e) => {
      e.preventDefault();
-     if(emailValidate && passwordValidate && checkpwvalidate && otherValidate) {
-      await dispatch(__postsignup({email, password, nickname}))
-      navigate("/signin")
-      
+    //  if(emailValidate && passwordValidate && checkpwvalidate && otherValidate) {
+    if(emailValidate && otherValidate) {
+      // await dispatch(__postsignup({email, password, nickname}))
+      register({email, password, nickname})
      } else {
       alert("입력되지 않은 내용이 있습니다.")
      }
@@ -37,7 +64,8 @@ function Singup() {
       </StyleDiv>
       <Form onSubmit={onSubmitSingup}>
         <p>회원가입</p>
-        <EmailInput
+        <CommenInput
+          type="이메일"
           title="이메일"
           name="email"
           value={email}
@@ -59,7 +87,8 @@ function Singup() {
           color="white"
           onClick={() => alert("중복확인")}
         />
-        <PasswordInput
+        <CommenInput
+          type="패스워드"
           title="비밀번호"
           name="password"
           value={password}
@@ -73,7 +102,8 @@ function Singup() {
               : "올바른 비밀번호 형식입니다."
           }
         />
-        <PasswordInput
+        <CommenInput
+          type="패스워드"
           title="비밀번호 확인"
           name="conformPassword"
           value={conformpw}
@@ -86,9 +116,9 @@ function Singup() {
               ? "동일한 비밀번호를 입력해주세요"
               : "위의 비밀번호와 일치합니다."
           }
-          
         />
-        <TextInput
+        <CommenInput
+          type="텍스트"
           title="닉네임"
           name="nickname"
           value={nickname}
@@ -115,60 +145,78 @@ function Singup() {
         <div>이미 아이디가 있으신가요?</div>
         <div onClick={() => navigate("/signin")}>로그인</div>
       </StyleDiv2>
+      <ModalBackground state={modal}/>
+      <Modal state={modal}>
+        <p>회원가입이 완료되었습니다.</p>
+        <img src={success} alt="signupimg"/>
+        <button onClick={()=>{setModal(pre=>!pre); navigate("/signin")}}>완료</button>
+      </Modal>
+      <ModalBackground state={errmodal}/>
+      <Modal state={errmodal}>
+        <h2>: ERROR :</h2>
+        <p>{errormsg}</p>
+        {/* <img src={success} alt="signupimg"/> */}
+        <button onClick={()=>{setErrModal(pre=>!pre); setErrormsge("")}}>완료</button>
+      </Modal>
+
     </Layout>
   );
 }
 
-export default Singup
+export default Singup;
 
-const StyleDiv = styled.div`
-  padding-top: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap:10px;
-  
+const ModalBackground = styled.div`
+  display: ${props => props.state ? "block" : "none"};
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(255,255,255,0.8);
+  z-index: 10;
+`
+const Modal = styled.div`
+  display: ${props => props.state ? "block" : "none"};
+  width: 600px;
+  height: 300px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #FFC04C;
+  border-radius: 15px;
+  z-index: 10;
+
+  h2 {
+    font-family: 'EF_jejudoldam';
+    text-align: center;
+    font-size: 3rem;
+    color:red;
+  }
+
+  p {
+    font-family: 'EF_jejudoldam';
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0;
+  }
   img {
-    border-radius: 10px;
-  }
-`
-
-const StyleDiv2 = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap:10px;
-  font-size: .8rem;
-`
-
-const StyleP = styled.div`
-  font-family: "Jal_Onuel";
-  font-size: 1.8em;
-  letter-spacing: -2.5px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  margin: 0 auto;
-  margin-top: 30px;
-  
-
-  input {
     display: block;
-    margin: 0;
+    height: 160px;
+    margin: 0 auto;
+  }
+
+  button {
+    font-family: 'EF_jejudoldam';
+    display: block;
+    width: 300px;
     height: 40px;
-    padding: 0 10px;
-  }
-  input:nth-child(1) {
-    border-radius: 5px 5px 0 0;
-    border: 1px solid gray;
-    border-bottom: 0;
-  }
-  input:nth-child(2) {
-    border-radius: 0 0 5px 5px;
-    border: 1px solid gray;
+    border-radius: 10px;
+    margin: 10px auto;
+    background-color: white;
+    border: none;
+    font-size: 1.3rem;
+    font-weight: 900;
   }
 `
-
