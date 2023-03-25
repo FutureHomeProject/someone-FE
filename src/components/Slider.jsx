@@ -93,10 +93,7 @@ const Layout = styled.div`
 
 
 const Img = styled.img`
-  width: auto;
   width: 100%;
-  display: block;
-  
 `
 
 const PreSliberBtn = styled.button`
