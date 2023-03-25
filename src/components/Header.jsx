@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { RxMagnifyingGlass } from 'react-icons/rx'
 import { BsCart } from 'react-icons/bs'
 import { CgProfile } from 'react-icons/cg'
@@ -10,8 +10,13 @@ import { useNavigate } from 'react-router-dom'
 export const cookies = new Cookies()
 
 function Header() {
+  const [signout, setSignout] = useState(false)
   const token = cookies.get('token')
   const navigate = useNavigate();
+  const onsignout = () => {
+    cookies.remove('token')
+    setSignout(pre => !pre)
+  }
 
 
   return (
@@ -59,9 +64,10 @@ function Header() {
                   <BsCart />
                 </div>
                 <div>{CgProfile}</div>
+                <div onClick={onsignout}>로그아웃</div>
                 <div>
                   <BlueButton
-                    width="60px"
+                    width="70px"
                     height="40px"
                     color="white"
                     innerText="글쓰기"

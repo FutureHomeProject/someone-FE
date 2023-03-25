@@ -17,8 +17,11 @@ export const useValidate = ({type, check}) => {
     case "checkpw":
       const checkpwvalidate = inputValidate === check
       return [inputValidate, onChangeHandler, checkpwvalidate]
-    default:
+    case "nickname":
       const otherValidate = inputValidate.length >= 2 && true
       return [inputValidate, onChangeHandler, otherValidate]
+    default:
+      return [inputValidate, onChangeHandler, setInputValidate]
+      
     }
 }

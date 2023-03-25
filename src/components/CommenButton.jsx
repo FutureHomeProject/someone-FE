@@ -4,7 +4,7 @@ import {AiOutlineDown} from 'react-icons/ai';
 export const BlueButton = ({innerText, type, onClick, width, height, color}) => {
     switch(innerText) {
       case "글쓰기" :
-        return <Button type={type} width={width} height={height} color={color}>{<>{innerText} <AiOutlineDown/></>}</Button>
+        return <Button type={type} width={width} height={height} color={color}>{<>{innerText} <span><AiOutlineDown/></span></>}</Button>
       case "로그인" :
         return <Button2 width={width} height={height} color={color}>{innerText}</Button2>
       case "회원가입": 
@@ -26,6 +26,10 @@ const Button = styled.button`
   background: #4FC0E8;
   &:hover {
     background:#2A7C9B;
+  }
+
+  span {
+    
   }
 `
 const Button2 = styled.button`

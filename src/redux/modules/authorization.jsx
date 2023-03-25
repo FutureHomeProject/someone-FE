@@ -1,17 +1,33 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-// import api from '../../api/BaseApi'
+import Cookies from "universal-cookie";
 
 
 export const __postsignup = createAsyncThunk(
   "signup",
   async(payload, thunkAPI) => {
-    console.log(`${process.env.REACT_APP_SERVER_KEY}/signup`)
     try{
       console.log(payload);
       // const data = await api.post(`/users/login`, payload)
-      const data = await axios.post(`${process.env.REACT_APP_SERVER_KEY}/signup`, payload)
+      const data = await axios.post(`http://localhost:4000/signup`, payload)
       console.log(data);
+    } 
+    catch (error) {
+      console.log(error.response)
+    }
+  }
+)
+
+export const __postsignin = createAsyncThunk(
+  "signin",
+  async(payload, thunkAPI) => {
+    try{
+      console.log(payload);
+      // const data = await api.post(`/users/login`, payload)
+      const data = await axios.post(`http://localhost:4000/signup`, payload)
+      const cookies = new Cookies;
+      cookies.set('token', data.status)
+      console.log(data.status);
     } 
     catch (error) {
       console.log(error.response)

@@ -16,11 +16,16 @@ function Singup() {
   const [email, onChangeEmail, emailValidate] = useValidate({type:"email"});
   const [password, onChangePassword, passwordValidate] = useValidate({type:"password"});
   const [conformpw, onChangePw, checkpwvalidate] = useValidate({type:"checkpw", check:password});
-  const [nickname, onChangenickname, otherValidate] = useValidate({type:"other"});
+  const [nickname, onChangenickname, otherValidate] = useValidate({type:"nickname"});
 
   const onSubmitSingup = async (e) => {
      e.preventDefault();
-     await dispatch(__postsignup({email, password, nickname}))
+     if(emailValidate && passwordValidate && checkpwvalidate && otherValidate) {
+      await dispatch(__postsignup({email, password, nickname}))
+      navigate("/signin")
+     } else {
+      alert("입력되지 않은 내용이 있습니다.")
+     }
   };
 
   return (

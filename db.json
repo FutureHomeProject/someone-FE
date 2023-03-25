@@ -1,9 +1,58 @@
 {
-  "posts": [
+  "signup": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "password": "a!12345678",
+      "nickname": "Edwin"
+    },
+    {
+      "email": "gg@g.com",
+      "password": "a!1234567",
+      "nickname": "edwin",
+      "id": 2
+    },
+    {
+      "email": "gg@g.com",
+      "password": "a!1234567",
+      "nickname": "edwin",
+      "id": 3
+    },
+    {
+      "email": "gg@g.com",
+      "password": "a!1234567",
+      "nickname": "edwin",
+      "id": 4
+    },
+    {
+      "email": "gg@g.com",
+      "password": "a!1234567",
+      "nickname": "edwin",
+      "id": 5
+    },
+    {
+      "email": "dd",
+      "password": "",
+      "id": 6
+    },
+    {
+      "email": "dd",
+      "password": "",
+      "id": 7
+    },
+    {
+      "email": "dd",
+      "password": "",
+      "id": 8
+    },
+    {
+      "email": "gg@g.com",
+      "password": "qq",
+      "id": 9
+    },
+    {
+      "email": "dd@g.com",
+      "password": "123",
+      "id": 10
     }
   ],
   "comments": [
