@@ -9,7 +9,7 @@ export const SuccessModal = ({modal, successmsg, setModal}) => {
     case "회원가입이 승인되었습니다." :
       return (
         <>
-          <ModalBackground />
+          <ModalBackground state={modal}/>
           <ModalWindow state={modal}>
           <p>{successmsg}</p>
             <img src={success} alt="signupimg" />
@@ -27,8 +27,8 @@ export const SuccessModal = ({modal, successmsg, setModal}) => {
     default :
       return (
         <>
-          <ModalBackground />
-          <ModalWindow state={modal}>
+          <ModalBackground state={modal}/>
+          <ModalWindow state={modal} color="#54D678">
           <h2> : 사용가능 : </h2>  
           <p>{successmsg}</p>
             <button
@@ -49,10 +49,9 @@ export const ErrModal = ({modal, setModal, errormsg, setErrormsg}) => {
   return (
     <>
       <ModalBackground state={modal}/>
-      <ModalWindow state={modal}>
+      <ModalWindow state={modal} color="red">
         <h2>: ERROR :</h2>
         <p>{errormsg}</p>
-        {/* <img src={success} alt="signupimg"/> */}
         <button
           onClick={() => {
             setModal((pre) => !pre);
@@ -80,7 +79,7 @@ const ModalBackground = styled.div`
   top: 0;
   left: 0;
   background-color: rgba(255,255,255,0.8);
-  z-index: 10;
+  z-index: 11;
 `
 const ModalWindow = styled.div`
   display: ${props => props.state ? "block" : "none"};
@@ -92,13 +91,13 @@ const ModalWindow = styled.div`
   transform: translate(-50%, -50%);
   background-color: #FFC04C;
   border-radius: 15px;
-  z-index: 10;
+  z-index: 11;
 
   h2 {
     font-family: 'EF_jejudoldam';
     text-align: center;
     font-size: 3rem;
-    color:red;
+    color: ${props => props.color};
   }
 
   p {

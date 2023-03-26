@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useMutation } from "react-query";
 
-export const useConfirmemail = (setModal, setErrModal,setErrormsg) => {
+export const useConfirm = (setModal, setErrModal,setErrormsg) => {
   
-  const { mutate: confirmemail } = useMutation({
+  const { mutate: confirm } = useMutation({
     mutationFn : async ([type, confirm]) => {
       console.log(type, confirm)
       let data;
@@ -29,5 +29,5 @@ export const useConfirmemail = (setModal, setErrModal,setErrormsg) => {
       setErrormsg(error.response.data.message)
       setErrModal(pre=>!pre)
   }})
-  return [confirmemail]
+  return [confirm]
 }

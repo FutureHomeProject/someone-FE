@@ -3,20 +3,19 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ImageSlider from '../components/Slider';
 import Products from '../components/Products';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { getproducts } from '../redux/modules/productsAPI';
 
 function Main() {
-  const queryClient = useQueryClient();
   const { data, isLoading, isError } = useQuery('products', getproducts);
   console.log(data);
 
   if (isLoading) {
-    return <div>로딩 중....</div>;
+    return (<div>로딩 중....</div>)
   }
 
   if (isError) {
-    return <div>에러가 발생했습니다.</div>;
+    return (<div>에러가 발생했습니다.</div>)
   }
 
   return (

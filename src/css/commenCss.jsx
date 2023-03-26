@@ -31,7 +31,8 @@ export const Layout = styled.div`
   min-width: 800px;
   margin: 0 auto;
 `
-// Header 컴포넌트 
+// Header 컴포넌트 ////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 export const HeaderDiv = styled.header`
 
   position: sticky;
@@ -86,7 +87,8 @@ export const NavBottom = styled.nav`
   margin: 0;
 `
 
-// Authorization 관련 
+// Authorization 관련 ////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
 export const StyleDiv = styled.div`
   padding-top: 50px;
   display: flex;
@@ -136,4 +138,3 @@ export const Form = styled.form`
     border: 1px solid gray;
   }
 `
-

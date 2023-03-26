@@ -1,62 +1,47 @@
 import React, { useState } from 'react'
+
+// 라우터 이용을 위한 임포트 
 import { useNavigate } from 'react-router-dom'
+
+// 디자인을 위한 임포트
 import { Layout } from '../css/commenCss.jsx'
 import { BlueButton } from '../components/CommenButton'
 import { CommenInput } from '../components/CommenInput'
 import { useValidate } from '../hook/useValidate'
-import SomeoneHou from '../img/SomeoneHou.png'
 import { StyleDiv, StyleDiv2, StyleP,Form } from '../css/commenCss.jsx'
-import { useMutation } from 'react-query'
-import axios from 'axios'
 
+// 로고
+import SomeoneHou from '../img/SomeoneHou.png'
+
+// 비동기 통신 및 그에 따른 후속조치를 위한 모달관련
+import { useConfirm } from '../hook/useConfirm.jsx'
+import { useSignup } from '../hook/useSignup.jsx'
 import { SuccessModal, ErrModal } from '../components/Modal.jsx'
-import { useConfirmemail } from '../hook/useConfirm.jsx'
 
 function Singup() {
   const navigate = useNavigate();
+  // 유효성 검사
   const [email, onChangeEmail, emailValidate] = useValidate({type:"email"});
   const [password, onChangePassword, passwordValidate] = useValidate({type:"password"});
   const [conformpw, onChangePw, checkpwvalidate] = useValidate({type:"checkpw", check:password});
   const [nickname, onChangenickname, otherValidate] = useValidate({type:"nickname"});
+
+  // 모달제어
   const [modal, setModal] = useState(false)
   const [errmodal, setErrModal] = useState(false)
   const [successmsg, setSuccessmsg] = useState('')
   const [errormsg, setErrormsg] = useState('')
-  const [confirmemail] = useConfirmemail(setModal,setErrModal, setErrormsg);
-  // console.log(errormsg);
 
-  const { mutate: register } = useMutation({
-    mutationFn : async (user) => {
-      const data = await axios.post(`${process.env.REACT_APP_SERVER_KEY}/users/signup`, user) 
-      return data.status
-    },
-    onSuccess: (data) => {
-      switch (data) {
-        case 200 :
-            setSuccessmsg("회원가입이 승인되었습니다.")
-            setModal(pre=>!pre);
-          return 
-        default :
-          return  
-      }
-      // 성공적으로 데이터를 업데이트한 후 실행될 로직을 작성합니다.
-    },
-    onError: (error) => {
-      // console.log(error)
-      setErrModal(pre=>!pre)
-      setErrormsg(error.response.data.message);
-      // 에러 발생 시 실행될 로직을 작성합니다.
-  }})
+  // 비동기서버통신을 위한 커스텀 훅
+  const [confirmemail] = useConfirm(setModal,setErrModal, setErrormsg);
+  const [signup] = useSignup(setModal, setSuccessmsg, setErrModal, setErrormsg)
 
 
-
-
+  // form 태그 실행함수 
   const onSubmitSingup = async (e) => {
      e.preventDefault();
-    //  if(emailValidate && passwordValidate && checkpwvalidate && otherValidate) {
-    if(emailValidate && otherValidate) {
-      // await dispatch(__postsignup({email, password, nickname}))
-      register({email, password, nickname})
+     if(emailValidate && passwordValidate && checkpwvalidate && otherValidate) {
+      signup({email, password, nickname})
      } else {
       alert("입력되지 않은 내용이 있습니다.")
      }
@@ -68,6 +53,7 @@ function Singup() {
         <img src={SomeoneHou} width="50px" alt="logo"></img>
         <StyleP>누군가의집</StyleP>
       </StyleDiv>
+
       <Form onSubmit={onSubmitSingup}>
         <p>회원가입</p>
         <CommenInput
@@ -91,7 +77,10 @@ function Singup() {
           width="100%"
           height="40px"
           color="white"
-          onClick={() => {confirmemail(["email", {email}]); setSuccessmsg("이메일사용이 가능합니다.")}}
+          onClick={() => {
+            confirmemail(["email", { email }]);
+            setSuccessmsg("이메일 사용이 가능합니다.");
+          }}
         />
         <CommenInput
           type="패스워드"
@@ -138,7 +127,10 @@ function Singup() {
           width="100%"
           height="40px"
           color="white"
-          onClick={() => {confirmemail(["nickname", {nickname}]); setSuccessmsg("닉네임 사용이 가능합니다.")}}
+          onClick={() => {
+            confirmemail(["nickname", { nickname }]);
+            setSuccessmsg("닉네임 사용이 가능합니다.");
+          }}
         />
         <BlueButton
           type="submit"
@@ -153,11 +145,10 @@ function Singup() {
         <div onClick={() => navigate("/signin")}>로그인</div>
       </StyleDiv2>
 
-      <SuccessModal 
-        modal={modal}
-        successmsg={successmsg}
-        setModal={setModal}
-        />
+      <SuccessModal
+        modal={modal} 
+        successmsg={successmsg} 
+        setModal={setModal} />
 
       <ErrModal
         modal={errmodal}
