@@ -1,28 +1,29 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Layout } from '../css/commenCss.jsx'
 import { BlueButton } from '../components/CommenButton'
 import { CommenInput } from '../components/CommenInput'
 import { useValidate } from '../hook/useValidate'
 import SomeoneHou from '../img/SomeoneHou.png'
-import { __postsignup } from '../redux/modules/authorization'
 import { StyleDiv, StyleDiv2, StyleP,Form } from '../css/commenCss.jsx'
 import { useMutation } from 'react-query'
 import axios from 'axios'
-import styled from 'styled-components'
-import success from '../img/signup/success.png'
+
+import { SuccessModal, ErrModal } from '../components/Modal.jsx'
+import { useConfirmemail } from '../hook/useConfirm.jsx'
 
 function Singup() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [email, onChangeEmail, emailValidate] = useValidate({type:"email"});
   const [password, onChangePassword, passwordValidate] = useValidate({type:"password"});
   const [conformpw, onChangePw, checkpwvalidate] = useValidate({type:"checkpw", check:password});
   const [nickname, onChangenickname, otherValidate] = useValidate({type:"nickname"});
   const [modal, setModal] = useState(false)
   const [errmodal, setErrModal] = useState(false)
-  const [errormsg, setErrormsge] = useState('')
+  const [successmsg, setSuccessmsg] = useState('')
+  const [errormsg, setErrormsg] = useState('')
+  const [confirmemail] = useConfirmemail(setModal,setErrModal, setErrormsg);
+  // console.log(errormsg);
 
   const { mutate: register } = useMutation({
     mutationFn : async (user) => {
@@ -32,6 +33,7 @@ function Singup() {
     onSuccess: (data) => {
       switch (data) {
         case 200 :
+            setSuccessmsg("회원가입이 승인되었습니다.")
             setModal(pre=>!pre);
           return 
         default :
@@ -40,10 +42,14 @@ function Singup() {
       // 성공적으로 데이터를 업데이트한 후 실행될 로직을 작성합니다.
     },
     onError: (error) => {
+      // console.log(error)
       setErrModal(pre=>!pre)
-      setErrormsge(error.response.data.message);
+      setErrormsg(error.response.data.message);
       // 에러 발생 시 실행될 로직을 작성합니다.
   }})
+
+
+
 
   const onSubmitSingup = async (e) => {
      e.preventDefault();
@@ -59,7 +65,7 @@ function Singup() {
   return (
     <Layout>
       <StyleDiv onClick={() => navigate("/")}>
-        <img src={SomeoneHou} width="50px" alt='logo'></img>
+        <img src={SomeoneHou} width="50px" alt="logo"></img>
         <StyleP>누군가의집</StyleP>
       </StyleDiv>
       <Form onSubmit={onSubmitSingup}>
@@ -85,7 +91,7 @@ function Singup() {
           width="100%"
           height="40px"
           color="white"
-          onClick={() => alert("중복확인")}
+          onClick={() => {confirmemail(["email", {email}]); setSuccessmsg("이메일사용이 가능합니다.")}}
         />
         <CommenInput
           type="패스워드"
@@ -132,9 +138,10 @@ function Singup() {
           width="100%"
           height="40px"
           color="white"
-          onClick={() => alert("중복확인")}
+          onClick={() => {confirmemail(["nickname", {nickname}]); setSuccessmsg("닉네임 사용이 가능합니다.")}}
         />
         <BlueButton
+          type="submit"
           innerText="회원가입"
           width="100%"
           height="40px"
@@ -145,78 +152,21 @@ function Singup() {
         <div>이미 아이디가 있으신가요?</div>
         <div onClick={() => navigate("/signin")}>로그인</div>
       </StyleDiv2>
-      <ModalBackground state={modal}/>
-      <Modal state={modal}>
-        <p>회원가입이 완료되었습니다.</p>
-        <img src={success} alt="signupimg"/>
-        <button onClick={()=>{setModal(pre=>!pre); navigate("/signin")}}>완료</button>
-      </Modal>
-      <ModalBackground state={errmodal}/>
-      <Modal state={errmodal}>
-        <h2>: ERROR :</h2>
-        <p>{errormsg}</p>
-        {/* <img src={success} alt="signupimg"/> */}
-        <button onClick={()=>{setErrModal(pre=>!pre); setErrormsge("")}}>완료</button>
-      </Modal>
 
+      <SuccessModal 
+        modal={modal}
+        successmsg={successmsg}
+        setModal={setModal}
+        />
+
+      <ErrModal
+        modal={errmodal}
+        setModal={setErrModal}
+        errormsg={errormsg}
+        setErrormsg={setErrormsg}
+      />
     </Layout>
   );
 }
 
 export default Singup;
-
-const ModalBackground = styled.div`
-  display: ${props => props.state ? "block" : "none"};
-  width: 100%;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(255,255,255,0.8);
-  z-index: 10;
-`
-const Modal = styled.div`
-  display: ${props => props.state ? "block" : "none"};
-  width: 600px;
-  height: 300px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #FFC04C;
-  border-radius: 15px;
-  z-index: 10;
-
-  h2 {
-    font-family: 'EF_jejudoldam';
-    text-align: center;
-    font-size: 3rem;
-    color:red;
-  }
-
-  p {
-    font-family: 'EF_jejudoldam';
-    text-align: center;
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 0;
-  }
-  img {
-    display: block;
-    height: 160px;
-    margin: 0 auto;
-  }
-
-  button {
-    font-family: 'EF_jejudoldam';
-    display: block;
-    width: 300px;
-    height: 40px;
-    border-radius: 10px;
-    margin: 10px auto;
-    background-color: white;
-    border: none;
-    font-size: 1.3rem;
-    font-weight: 900;
-  }
-`

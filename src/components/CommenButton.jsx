@@ -5,11 +5,11 @@ export const BlueButton = ({innerText, type, onClick, width, height, color}) => 
       case "글쓰기" :
         return <Button type={type} width={width} height={height} color={color}>{<>{innerText}</>}</Button>
       case "로그인" :
-        return <Button2 width={width} height={height} color={color}>{innerText}</Button2>
+        return <Button2 type={type} width={width} height={height} color={color}>{innerText}</Button2>
       case "회원가입": 
-        return <Button3 width={width} height={height} color={color}>{innerText}</Button3>
+        return <Button3 type={type} width={width} height={height} color={color}>{innerText}</Button3>
       case "중복확인": 
-        return <Button2 onClick={onClick} width={width} height={height} color={color}>{innerText}</Button2>  
+        return <Button2 type={type} onClick={onClick} width={width} height={height} color={color}>{innerText}</Button2>  
       default :
         return  <Button width={width} height={height} color={color}>{innerText}</Button>
     }
