@@ -1,8 +1,8 @@
-import React from "react";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import styled from "styled-components";
+import React from 'react'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import styled from 'styled-components'
 
 const SimpleSlider = () => {
   const settings = {
@@ -10,8 +10,8 @@ const SimpleSlider = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
-  };
+    slidesToScroll: 1,
+  }
 
   return (
     <div>
@@ -37,9 +37,9 @@ const SimpleSlider = () => {
         </div>
       </Slider>
     </div>
-  );
-};
+  )
+}
 
-export default SimpleSlider;
+export default SimpleSlider
 
 const StyledSlider = styled(Slider)``

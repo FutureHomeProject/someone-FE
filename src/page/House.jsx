@@ -461,3 +461,4 @@ const BoxDiv = styled.div`
     }
   }
 `
+//글 쓰기 부분
