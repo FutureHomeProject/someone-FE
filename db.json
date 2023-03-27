@@ -67,10 +67,20 @@
       "id": 11
     },
     {
-      "email": "gg@g.com",
-      "password": "a!12345678",
-      "nickname": "edwindddddfdfdf",
-      "id": 12
+      "email": "cinnamon1995@naver.com",
+      "password": "2017kookmin!",
+      "nickname": "만찡이",
+      "id": 14
+    },
+    {
+      "email": "cinnamon1995@naver.com",
+      "password": "2017kookmin!",
+      "id": 15
+    },
+    {
+      "email": "cinnamon1995@naver.com",
+      "password": "29017kookmin!",
+      "id": 16
     }
   ],
   "comments": [

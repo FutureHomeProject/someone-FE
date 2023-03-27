@@ -1,13 +1,14 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Main from "../page/Main";
-import MainDetail from "../page/MainDetail";
-import House from '../page/House';
-import HouseWrite from '../page/HouseWrite';
-import HouseDetail from '../page/HouseDetail';
-import Singin from '../page/Singin';
-import Signup from '../page/Signup';
+import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Main from '../page/Main'
+import MainDetail from '../page/MainDetail'
+import House from '../page/House'
+import HouseWrite from '../page/HouseWrite'
+import HouseDetail from '../page/HouseDetail'
+import Singin from '../page/Singin'
+import Signup from '../page/Signup'
 import Error from '../page/Error'
+
 import Scrap from "../page/Scrap"
 
 const Router = () => {
@@ -28,4 +29,4 @@ const Router = () => {
     )
 }
 
-export default Router;
+export default Router
