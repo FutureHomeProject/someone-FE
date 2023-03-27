@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components';
-import { BlueButton } from '../components/CommenButton'
+import { StyledButton } from '../components/CommenButton'
 import {BsTextParagraph, BsPencilSquare} from 'react-icons/bs'
 import {SlArrowDown,SlArrowUp } from 'react-icons/sl'
 import { useNavigate } from 'react-router-dom';
@@ -25,7 +25,7 @@ function House() {
           <div className="logo">누군가의집</div>
           <div></div>
           <div>
-            <BlueButton
+            <StyledButton
               width="150px"
               height="40px"
               color="white"

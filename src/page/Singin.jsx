@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 // 디자인을 위한 임포트 
 import { Layout } from '../css/commenCss.jsx'
-import { BlueButton } from '../components/CommenButton'
+import { StyledButton } from '../components/CommenButton'
 import { StyleDiv, StyleDiv2, StyleP,Form } from '../css/commenCss.jsx'
 
 // 로고
@@ -58,7 +58,7 @@ function Singin() {
             value={password}
             onChange={onChangepassword}
           />
-          <BlueButton
+          <StyledButton
             innerText="로그인"
             width="100%"
             height="40px"

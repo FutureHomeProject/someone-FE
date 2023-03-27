@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const BlueButton = ({innerText, type, onClick, width, height, color}) => {
+export const StyledButton = ({innerText, type, onClick, width, height, color}) => {
     switch(innerText) {
       case "글쓰기" :
         return <Button type={type} width={width} height={height} color={color}>{<>{innerText}</>}</Button>

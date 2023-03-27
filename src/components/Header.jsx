@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import { RxMagnifyingGlass } from 'react-icons/rx'
 import { BsCart } from 'react-icons/bs'
 import { CgProfile } from 'react-icons/cg'
-import styled from 'styled-components'
 import Cookies from 'universal-cookie'
-import { BlueButton } from './CommenButton'
+import { StyledButton } from './CommenButton'
 import { useNavigate } from 'react-router-dom'
 import { HeaderDiv, NavTop, NavBottom } from '../css/commenCss.jsx'
 
@@ -40,14 +39,13 @@ function Header() {
               <div>
                 <div>
                   <div>
-                    <RxMagnifyingGlass />
+                    <RxMagnifyingGlass/>
                   </div>
                   <div>
                     <BsCart />
                   </div>
                 </div>
                 <div
-                  className="authorization line"
                   onClick={() => navigate("/signin")}
                 >
                   로그인
@@ -80,13 +78,13 @@ function Header() {
                 <div>
                   <RxMagnifyingGlass />
                 </div>
-                <div>
+                <div className='icons'>
                   <BsCart />
                 </div>
                 <div>{CgProfile}</div>
                 <div onClick={onsignout}>로그아웃</div>
                 <div onClick={onWrite}>
-                  <BlueButton
+                  <StyledButton
                     width="70px"
                     height="40px"
                     color="white"

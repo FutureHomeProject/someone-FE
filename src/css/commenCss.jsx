@@ -41,7 +41,7 @@ export const HeaderDiv = styled.header`
   /* margin: 10px 0; */
   padding: 10px 0;
   border-bottom: 1px solid gray;
-  z-index: 999;
+  z-index: 10;
 `
 
 export const NavTop = styled.nav`
@@ -72,11 +72,9 @@ export const NavTop = styled.nav`
     padding-right: 10px;
     display: flex;
     justify-content: flex-end;
-  }
-  .authorization {
-    font-size: .7rem;
-  }
-  .line {
+    font-size: .9rem;
+
+    
   }
 `
 export const NavBottom = styled.nav`

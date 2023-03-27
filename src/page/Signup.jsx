@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 // 디자인을 위한 임포트
 import { Layout } from '../css/commenCss.jsx'
-import { BlueButton } from '../components/CommenButton'
+import { StyledButton } from '../components/CommenButton'
 import { CommenInput } from '../components/CommenInput'
 import { useValidate } from '../hook/useValidate'
 import { StyleDiv, StyleDiv2, StyleP,Form } from '../css/commenCss.jsx'
@@ -71,7 +71,7 @@ function Singup() {
               : "올바른 이메일 형식입니다."
           }
         />
-        <BlueButton
+        <StyledButton
           type="button"
           innerText="중복확인"
           width="100%"
@@ -121,7 +121,7 @@ function Singup() {
           onChange={onChangenickname}
           validate="다른 유저와 겹치지 않도록 입력해주세요(2-15자)"
         />
-        <BlueButton
+        <StyledButton
           type="button"
           innerText="중복확인"
           width="100%"
@@ -132,7 +132,7 @@ function Singup() {
             setSuccessmsg("닉네임 사용이 가능합니다.");
           }}
         />
-        <BlueButton
+        <StyledButton
           type="submit"
           innerText="회원가입"
           width="100%"
