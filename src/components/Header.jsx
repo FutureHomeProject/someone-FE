@@ -30,7 +30,7 @@ function Header() {
           <HeaderDiv>
             {/* 토큰이 없을 때 */}
             <NavTop>
-              <div className="logo">누군가의집</div>
+              <div className="logo" onClick={()=>navigate("/")}>누군가의집</div>
               <div>
                 <div>커뮤니티</div>
                 <div>쇼핑</div>
@@ -81,7 +81,7 @@ function Header() {
                 <div className='icons'>
                   <BsCart />
                 </div>
-                <div>{CgProfile}</div>
+                <div><CgProfile/></div>
                 <div onClick={onsignout}>로그아웃</div>
                 <div onClick={onWrite}>
                   <StyledButton

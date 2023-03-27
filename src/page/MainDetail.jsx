@@ -8,8 +8,7 @@ import ReviewModal from '../components/ReviewModal';
 import products1 from '../img/produts/products1.webp'
 
 function MainDetail() {
-  const {id} = useParams()
-  console.log(+id);
+  const {id} = useParams();
   // DB에서 불러온 데이터에서 파람스의 값과 일치되는 녀석을 가져오기
   const price = 2499000
   const today = Date.now(); // 현재시간을 구하고
@@ -38,13 +37,13 @@ function MainDetail() {
           </Sale>
           <Subtitle>
             <p>혜택</p>
-            <p><span>{price / 1000}</span>P 적립</p>
+            <div><span>{price / 1000}</span>P 적립</div>
           </Subtitle>
           <Subtitle>
             <p>배송</p>
-            <p>
+            <div>
               <span>무료배송</span> <br /> 업체직접배송
-            </p>
+            </div>
             <div>
               <span style={{color:"skyblue", fontWeight:"900"}}>{months}/{date}({day[dayNum]})</span> 이내 도착 예정
             </div>
@@ -56,7 +55,7 @@ function MainDetail() {
       <div style={{ position: "sticky", bottom: "0px", padding:"20px 0", background:"white"}}>
         <button style={{width:"100%", height:"50px", border:"none", background:"skyblue", fontSize:"1.5rem", color:"white", fontWeight:"700", borderRadius:"10px"}}>구매하기</button>
       </div>
-      <ReviewModal modal={modal} setModal={setModal} img={products1} marketer="LG전자" productsName="[오늘의딜] 트롬 워시타워 W20WAN 세탁23kg 건조20kg"/>
+      <ReviewModal productId={id} modal={modal} setModal={setModal} img={products1} marketer="LG전자" productsName="[오늘의딜] 트롬 워시타워 W20WAN 세탁23kg 건조20kg"/>
       
       <Footer />
     </>
@@ -109,7 +108,7 @@ const Sale = styled.p`
   }
 `
 
-const Subtitle = styled.p`
+const Subtitle = styled.div`
   p:nth-child(1) {
     color:gray;
   }
