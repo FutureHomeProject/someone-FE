@@ -41,46 +41,49 @@
   (1) https://velog.io/@dev_kdh/42gg-에러-페이지-구현하기
 
 ### 03) 리덕스 중앙상태관리소
+  - redux
+    - config : configStore.jsx 
+    - modules
+      - productsSlice.jsx
+      - houseSlice.jsx
+      - houseCommentSlice.jsx
+      - scrapSlice.jsx
 
-- redux
-  - config : configStore.jsx
-  - modules
-    - productsSlice.jsx
-    - houseSlice.jsx
-    - houseCommentSlice.jsx
-    - scrapSlice.jsx
+  #### 04) 작업일지 
+  - (월요일) 컴포넌트 완료
+  - (화요일) 서버통신/에러처리 
+  - (수요일) 무한스크롤
+  - (목요일) CSS 마무리
 
-#### 04) 작업일지
+  #### 05) 03월 24일 - 금요일 작업일지
+  - Header, Footer 컴포넌트 공동제작
+   .trouble -> git issue -> push가 안대 머지와 리베이스등을 했지만 해결이 안 됐고
+               레포지토리 다시 파서 해결했습니다. 
+   .trouble -> header 에 있는 커뮤니티와 쇼핑 클릭 했을 때의 액션상황 효율적인 관리 
+  - 로그인, 회원가입 - useInput() 훅사용 
+ 
+ #### 06) 3월 25일 - 토요일 작업일지
+ - 로그인, 회원가입 페이지 완성하기
+ - 뷰는 완성, 기능구현을 위해서 db.json 서버 활용
 
-- (월요일) 컴포넌트 완료
-- (화요일) 서버통신/에러처리
-- (수요일) 무한스크롤
-- (목요일) CSS 마무리
+ #### 07) 3월 26일 - 일요일 작업일지
+ - 회원가입 중복확인 : Request failed with status code 415 에러발생
+   해당 문제는 타입 오류에 해당된다. 객체를 원했는데 {email:email}, 내가 문자열을 전달해서 발생된 오류였다. 
+ - Header 아이콘 크기 제어는 어떻게?   
 
-#### 05) 03월 24일 - 금요일 작업일지
 
-- Header, Footer 컴포넌트 공동제작
-  .trouble -> git issue -> push가 안대 머지와 리베이스등을 했지만 해결이 안 됐고
-  레포지토리 다시 파서 해결했습니다.
-  .trouble -> header 에 있는 커뮤니티와 쇼핑 클릭 했을 때의 액션상황 효율적인 관리
-- 로그인, 회원가입 - useInput() 훅사용
+  ##### 이미지 슬라이더 관련 부분
+  라이브러리는 npm install react-slick 하나만 설치하면 되는 것 같다. 
+  - "react-slick": "^0.29.0",
+  - "slick-carousel": "^1.8.1",
 
-#### 06) 3월 25일 - 토요일 작업일지
 
-- 로그인, 회원가입 페이지 완성하기
-- 뷰는 완성, 기능구현을 위해서 db.json 서버 활용
-- footer 95% 완성
-- 맥북 꿀 기능 내장 된 디지털 컬러 측정기 사용법!
-- 설정에서 16진수로 값 가져오면 styled 컬러 값으로 추출 가능
-- 원하는 컬러에 커서 놓고 커맨드+시프트+c 하면 값복사
 
-#### 10) react-icons
+  #### 10) react-icons
+  - BsBookmark : 북마크
+  - Bell : 알림 아이콘 <VscBell />
 
-- BsBookmark : 북마크
-- Bell : 알림 아이콘 <VscBell />
-
-### 11) 토큰
-
-- 라이브러리 설치 후
-- 생성자 함수 선언 후
-- 토큰 유무에 따라 상황을 설정한다.
+  ### 11) 토큰 
+  - 라이브러리 설치 후 
+  - 생성자 함수 선언 후 
+  -  토큰 유무에 따라 상황을 설정한다.

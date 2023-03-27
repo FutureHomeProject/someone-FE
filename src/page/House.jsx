@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
-import { BlueButton } from '../components/CommenButton'
-import { HeaderDiv, NavTop } from '../components/Header'
-import { BsTextParagraph, BsPencilSquare } from 'react-icons/bs'
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl'
-import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components';
+import { StyledButton } from '../components/CommenButton'
+import {BsTextParagraph, BsPencilSquare} from 'react-icons/bs'
+import {SlArrowDown,SlArrowUp } from 'react-icons/sl'
+import { useNavigate } from 'react-router-dom';
+import { HeaderDiv, NavTop } from '../css/commenCss.jsx'
 
 function House() {
   const navigate = useNavigate()
@@ -45,7 +45,14 @@ function House() {
           <div className="logo">누군가의집</div>
           <div></div>
           <div>
-            <BlueButton width="150px" height="40px" color="white" innerText="발행" navigate />
+
+            <StyledButton
+              width="150px"
+              height="40px"
+              color="white"
+              innerText="발행"navigate
+            />
+
           </div>
         </NavTop>
       </HeaderDiv>

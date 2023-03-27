@@ -4,8 +4,11 @@ import styled from 'styled-components';
 
 // Login - input parts //////////////////////////////////////////////////////
 const inputHeigt = "40px"
-export const EmailInput = ({title, name, validate, conform, value, onChange}) => {
-  return (
+
+export const CommenInput = ({type, title, name, validate, conform, value, onChange}) => {
+  switch (type) {
+    case "이메일" :
+      return (
         <>
         <Title value={value} conform={conform}>{title}</Title>
         <Validate value={value} conform={conform}>{validate}</Validate>
@@ -19,11 +22,9 @@ export const EmailInput = ({title, name, validate, conform, value, onChange}) =>
             placeholder="이메일을 입력해주세요"
         />
         </>
-  )
-}
-
-export const PasswordInput = ({title, name, validate, conform, value, onChange}) => {
-  return (
+      )
+    case "패스워드" :
+      return (
         <>
         <Title value={value} conform={conform}>{title}</Title>
         <Validate value={value} conform={conform}>{validate}</Validate>
@@ -35,15 +36,12 @@ export const PasswordInput = ({title, name, validate, conform, value, onChange})
             conform={conform}
             onChange={onChange}
             minLength="8"
-            placeholder= {title  === "비밀번호" ? "비밀번호" : "비밀번호 확인"}
-            
+            placeholder= {title  === "비밀번호" ? "비밀번호" : "비밀번호 확인"}      
         />
         </>
-  )
-}
-
-export const TextInput = ({title, name, validate,value, conform, onChange}) => {
-  return (
+      )
+    case "텍스트" :
+      return (
         <>
         <Title value={value} conform={conform}>{title}</Title>
         <Validate value={value} conform={conform}>{validate}</Validate>
@@ -59,10 +57,49 @@ export const TextInput = ({title, name, validate,value, conform, onChange}) => {
             maxLength="15"
         />
         </>
-  )
-}
+      )  
+    default :
+        return (
+          <>
+              <Input 
+                heigth={inputHeigt}
+                name={name}
+                type="text"
+                value={value}
+                onChange={onChange}
+                conform={conform}
+                placeholder="별명(2-15자)"
+                minLength="2"
+                maxLength="15"
+            />
+          </>
+        ) 
+  };
+};
 
 // Styled-components /////////////////////////////////////////////////////////
+const Title = styled.p`
+  margin: 0;
+  margin-top: 20px;
+  color: ${(props) =>
+    props.value === "" && !props.conform
+      ? "black"
+      : props.value !== "" && !props.conform
+      ? "red"
+      : "black"};
+`;
+
+const Validate = styled.p`
+  color: gray;
+  font-size: 0.7rem;
+  color: ${(props) =>
+    props.value === "" && !props.conform
+      ? "black"
+      : props.value !== "" && !props.conform
+      ? "red"
+      : "black"};
+`;
+
 const Input = styled.input`
   display: block;
   height: ${(props) => props.inputHeigt};
@@ -84,27 +121,4 @@ const Input = styled.input`
   &:focus {
     outline: none;
   }
-`;
-
-
-const Title = styled.p`
-  margin: 0;
-  margin-top: 20px;
-  color: ${(props) =>
-    props.value === "" && !props.conform
-      ? "black"
-      : props.value !== "" && !props.conform
-      ? "red"
-      : "black"};
-`
-
-const Validate = styled.p`
-  color: gray;
-  font-size: 0.7rem;
-  color: ${(props) =>
-    props.value === "" && !props.conform
-      ? "black"
-      : props.value !== "" && !props.conform
-      ? "red"
-      : "black"};
 `;

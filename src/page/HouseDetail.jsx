@@ -1,8 +1,12 @@
 import React from 'react'
 
+
 function HouseDetail() {
+  
   return (
-    <div>HouseDetail</div>
+    <>
+    <div>집들이페이지</div>
+    </>
   )
 }
 

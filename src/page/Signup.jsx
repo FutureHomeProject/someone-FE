@@ -1,29 +1,47 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+
+// 라우터 이용을 위한 임포트 
 import { useNavigate } from 'react-router-dom'
-import styled from 'styled-components'
-import { Layout } from '../App'
-import { BlueButton } from '../components/CommenButton'
-import { EmailInput, PasswordInput, TextInput } from '../components/CommenInput'
+
+// 디자인을 위한 임포트
+import { Layout } from '../css/commenCss.jsx'
+import { StyledButton } from '../components/CommenButton'
+import { CommenInput } from '../components/CommenInput'
 import { useValidate } from '../hook/useValidate'
+import { StyleDiv, StyleDiv2, StyleP,Form } from '../css/commenCss.jsx'
+
+// 로고
 import SomeoneHou from '../img/SomeoneHou.png'
-import { __postsignup } from '../redux/modules/authorization'
+
+// 비동기 통신 및 그에 따른 후속조치를 위한 모달관련
+import { useConfirm } from '../hook/useConfirm.jsx'
+import { useSignup } from '../hook/useSignup.jsx'
+import { SuccessModal, ErrModal } from '../components/Modal.jsx'
 
 function Singup() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
+  // 유효성 검사
   const [email, onChangeEmail, emailValidate] = useValidate({type:"email"});
   const [password, onChangePassword, passwordValidate] = useValidate({type:"password"});
   const [conformpw, onChangePw, checkpwvalidate] = useValidate({type:"checkpw", check:password});
   const [nickname, onChangenickname, otherValidate] = useValidate({type:"nickname"});
 
+  // 모달제어
+  const [modal, setModal] = useState(false)
+  const [errmodal, setErrModal] = useState(false)
+  const [successmsg, setSuccessmsg] = useState('')
+  const [errormsg, setErrormsg] = useState('')
+
+  // 비동기서버통신을 위한 커스텀 훅
+  const [confirmemail] = useConfirm(setModal,setErrModal, setErrormsg);
+  const [signup] = useSignup(setModal, setSuccessmsg, setErrModal, setErrormsg)
+
+
+  // form 태그 실행함수 
   const onSubmitSingup = async (e) => {
      e.preventDefault();
      if(emailValidate && passwordValidate && checkpwvalidate && otherValidate) {
-      await dispatch(__postsignup({email, password, nickname}))
-      navigate("/signin")
-      
+      signup({email, password, nickname})
      } else {
       alert("입력되지 않은 내용이 있습니다.")
      }
@@ -32,12 +50,14 @@ function Singup() {
   return (
     <Layout>
       <StyleDiv onClick={() => navigate("/")}>
-        <img src={SomeoneHou} width="50px" alt='logo'></img>
+        <img src={SomeoneHou} width="50px" alt="logo"></img>
         <StyleP>누군가의집</StyleP>
       </StyleDiv>
+
       <Form onSubmit={onSubmitSingup}>
         <p>회원가입</p>
-        <EmailInput
+        <CommenInput
+          type="이메일"
           title="이메일"
           name="email"
           value={email}
@@ -51,15 +71,19 @@ function Singup() {
               : "올바른 이메일 형식입니다."
           }
         />
-        <BlueButton
+        <StyledButton
           type="button"
           innerText="중복확인"
           width="100%"
           height="40px"
           color="white"
-          onClick={() => alert("중복확인")}
+          onClick={() => {
+            confirmemail(["email", { email }]);
+            setSuccessmsg("이메일 사용이 가능합니다.");
+          }}
         />
-        <PasswordInput
+        <CommenInput
+          type="패스워드"
           title="비밀번호"
           name="password"
           value={password}
@@ -73,7 +97,8 @@ function Singup() {
               : "올바른 비밀번호 형식입니다."
           }
         />
-        <PasswordInput
+        <CommenInput
+          type="패스워드"
           title="비밀번호 확인"
           name="conformPassword"
           value={conformpw}
@@ -86,9 +111,9 @@ function Singup() {
               ? "동일한 비밀번호를 입력해주세요"
               : "위의 비밀번호와 일치합니다."
           }
-          
         />
-        <TextInput
+        <CommenInput
+          type="텍스트"
           title="닉네임"
           name="nickname"
           value={nickname}
@@ -96,15 +121,19 @@ function Singup() {
           onChange={onChangenickname}
           validate="다른 유저와 겹치지 않도록 입력해주세요(2-15자)"
         />
-        <BlueButton
+        <StyledButton
           type="button"
           innerText="중복확인"
           width="100%"
           height="40px"
           color="white"
-          onClick={() => alert("중복확인")}
+          onClick={() => {
+            confirmemail(["nickname", { nickname }]);
+            setSuccessmsg("닉네임 사용이 가능합니다.");
+          }}
         />
-        <BlueButton
+        <StyledButton
+          type="submit"
           innerText="회원가입"
           width="100%"
           height="40px"
@@ -115,60 +144,20 @@ function Singup() {
         <div>이미 아이디가 있으신가요?</div>
         <div onClick={() => navigate("/signin")}>로그인</div>
       </StyleDiv2>
+
+      <SuccessModal
+        modal={modal} 
+        successmsg={successmsg} 
+        setModal={setModal} />
+
+      <ErrModal
+        modal={errmodal}
+        setModal={setErrModal}
+        errormsg={errormsg}
+        setErrormsg={setErrormsg}
+      />
     </Layout>
   );
 }
 
-export default Singup
-
-const StyleDiv = styled.div`
-  padding-top: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap:10px;
-  
-  img {
-    border-radius: 10px;
-  }
-`
-
-const StyleDiv2 = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap:10px;
-  font-size: .8rem;
-`
-
-const StyleP = styled.div`
-  font-family: "Jal_Onuel";
-  font-size: 1.8em;
-  letter-spacing: -2.5px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 400px;
-  margin: 0 auto;
-  margin-top: 30px;
-  
-
-  input {
-    display: block;
-    margin: 0;
-    height: 40px;
-    padding: 0 10px;
-  }
-  input:nth-child(1) {
-    border-radius: 5px 5px 0 0;
-    border: 1px solid gray;
-    border-bottom: 0;
-  }
-  input:nth-child(2) {
-    border-radius: 0 0 5px 5px;
-    border: 1px solid gray;
-  }
-`
-
+export default Singup;

@@ -8,25 +8,25 @@ import HouseDetail from '../page/HouseDetail'
 import Singin from '../page/Singin'
 import Signup from '../page/Signup'
 import Error from '../page/Error'
-import Scrap from '../page/Scrap'
-// import SimpleSlider from "../components/Slider";
+
+import Scrap from "../page/Scrap"
 
 const Router = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/detail/:id" element={<MainDetail />} />
-        <Route path="/house" element={<House />} />
-        <Route path="/house/write" element={<HouseWrite />} />
-        <Route path="/houst/:id" element={<HouseDetail />} />
-        <Route path="/signin" element={<Singin />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/scrap" element={<Scrap />} />
-        {/* <Route path="/error" element={<Error />} /> */}
-      </Routes>
-    </BrowserRouter>
-  )
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Main />} />
+                <Route path="/products/:id" element={<MainDetail />} />
+                <Route path="/house" element={<House />} />
+                <Route path="/house/write" element={<HouseWrite />} />
+                <Route path="/houst/:id" element={<HouseDetail />} />
+                <Route path="/signin" element={<Singin />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/scrap" element={<Scrap />} />
+                <Route path="/error" element={<Error />} />
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
 export default Router
