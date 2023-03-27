@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import {SlArrowDown,SlArrowUp } from 'react-icons/sl'
 import photopoint from '../img/review/photopoint.png'
+import {BsFillStarFill} from 'react-icons/bs'
 
 const ReviewModal = ({modal, setModal, marketer, img, productsName }) => {
   const [cancleModal, setCancleModal] = useState(false)
@@ -13,23 +14,62 @@ const ReviewModal = ({modal, setModal, marketer, img, productsName }) => {
     <>
       <ModalBackground state={modal} />
       <ModalWindow state={modal}>
-       <p className='canclebtn'><button onClick={()=>setCancleModal(pre=>!pre)}>X</button></p>
-       <h2>리뷰쓰기</h2>
-       <div>🅟포토리뷰 250P, 일반리뷰 0P</div>
-       <div>
-        <img src={img} width="100" style={{display:"block", borderRadius:"10px"}}/>
-        <p>{marketer}</p>
-        <p>{productsName}</p>
+       <div className='canclebtn'><button onClick={()=>setCancleModal(pre=>!pre)}>X</button></div>
+       <div className='reviewTitle'>리뷰쓰기</div>
+       <div className='layout'>
+       <div className='reviewPoint'>🅟 포토리뷰 <span>250P</span>, 일반리뷰 <span>0P</span></div>
+       <div className='products'>
+        <div>
+        <img src={img} width="100%" style={{display:"block", borderRadius:"10px"}}/>
+        </div>
+        <div>
+        <p className='marketer'>{marketer}</p>
+        <div>{productsName}</div>
+        </div>
        </div>
        <h3>별점평가</h3>
        <p>만족도</p>
+       <div>
+        <ul>
+          <li>
+            <label>
+              <input type="radio" value="1" name='selectstar'/>
+              <span className='star-icon'><BsFillStarFill/></span>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" value="2"  name='selectstar'/>
+              <BsFillStarFill/>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" value="3"  name='selectstar'/>
+              <BsFillStarFill/>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" value="4"  name='selectstar'/>
+              <BsFillStarFill/>
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" value="5"  name='selectstar'/>
+              <BsFillStarFill/>
+            </label>
+          </li>
+        </ul>
+       </div>
        <div>
         <p>사진첨부(선택)</p>
         <img src={photopoint} height="40"/>
         <button>사진 첨부하기</button>
        </div>
        <h3>리뷰작성</h3>
-       <textarea />
+       <textarea style={{resize:"none"}}/>
        <button onClick={()=> setModal(pre=>!pre)}>완료</button>
 
        <Writeguide iconcolor="#90ee90">
@@ -56,7 +96,7 @@ const ReviewModal = ({modal, setModal, marketer, img, productsName }) => {
             </ol>
           </Hiddendiv>
         </Writeguide>
-
+        </div>
         <div>
           <li>상품을 직접 사용한 경우에만 리뷰 작성을 하실 수 있습니다.</li>
           <li>비구매 상품 리뷰 포인트는 심사 후 지급됩니다. (영업일 기준 2~3일 소요)</li>
@@ -105,15 +145,60 @@ const ModalWindow = styled.div`
   background-color: white;
   border-radius: 15px;
   z-index: 11;
-
+  .layout {
+    width: 90%;
+    margin: 30px auto;
+  }
   .canclebtn {
     text-align: end;
-    margin-right: 20px;
+    margin-right: 15px;
+    margin-top: 15px;
     button {
       border: none;
       background-color: transparent;
       font-size: 2rem;
     }
+  }
+  .reviewTitle {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: 900;
+  }
+  .reviewPoint {
+    background-color: #525B61;
+    color: white;
+    font-weight: 900;
+    padding: 5px 20px;
+    height: 2rem;
+    line-height: 2rem;
+
+    span:nth-child(1) {
+      color: #6BD1F0;
+    }
+    span:nth-child(2) {
+      color: lightgray;
+    }
+  }
+
+  .products {
+    margin: 10px 0;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 10px;
+
+    div:nth-child(2) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+  .marketer {
+    color: #858585;
   }
 `;
 
