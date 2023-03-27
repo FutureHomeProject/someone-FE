@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../components/Footer'
 import Header from '../components/Header'
+import ReviewBox from '../components/mainpage/ReviewBox';
 import ReviewModal from '../components/ReviewModal';
 import products1 from '../img/produts/products1.webp'
 
@@ -28,7 +29,7 @@ function MainDetail() {
         <div>
           <img src={products1} width="100%" />
         </div>
-        <div>
+        <div >
           <Title>LG전자</Title>
           <ProductName>[오늘의딜] 트롬 워시타워 W20WAN 세탁23kg 건조20kg</ProductName>
           <Review>리뷰 752개</Review>
@@ -50,31 +51,13 @@ function MainDetail() {
           </Subtitle>
         </div>
       </ProductsDiv>
-      <div>
-          <p>리뷰 752</p>
-          <p><button onClick={()=>{setModal(pre=>!pre)}}>리뷰쓰기</button></p>
-          <div>
-            <p>★★★★★ 4.9</p>
-            <p>별점 그래프?</p>
-          </div>
-      </div>
-
-      <div>
-        <p>유저이름</p>
-        <p>내구성 별정</p>
-        <p>가격 별정</p>
-        <p>디자인 별정</p>
-        <p>배송 별정</p>
-        <p>제품명</p>
-        <p>이미지</p>
-        <p>리뷰 내용</p>
-
-      </div>
+      <ReviewBox onClick={()=>setModal(pre=>!pre)}/>
 
       <div style={{ position: "sticky", bottom: "0px", padding:"20px 0", background:"white"}}>
         <button style={{width:"100%", height:"50px", border:"none", background:"skyblue", fontSize:"1.5rem", color:"white", fontWeight:"700", borderRadius:"10px"}}>구매하기</button>
       </div>
-      <ReviewModal modal={modal} setModal={setModal}/>
+      <ReviewModal modal={modal} setModal={setModal} img={products1} marketer="LG전자" productsName="[오늘의딜] 트롬 워시타워 W20WAN 세탁23kg 건조20kg"/>
+      
       <Footer />
     </>
   );
