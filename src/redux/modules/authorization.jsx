@@ -25,7 +25,7 @@ export const __postsignin = createAsyncThunk(
       console.log(payload);
       // const data = await api.post(`/users/login`, payload)
       const data = await axios.post(`http://localhost:4000/signup`, payload)
-      const cookies = new Cookies;
+      const cookies = new Cookies();
       cookies.set('token', data.status)
       console.log(data.status);
     } 

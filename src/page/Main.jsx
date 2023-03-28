@@ -3,8 +3,8 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import ImageSlider from '../components/Slider';
 import Products from '../components/Products';
-import { useQuery } from 'react-query';
-import { getproducts } from '../redux/modules/productsAPI';
+// import { useQuery } from 'react-query';
+// import { getproducts } from '../redux/modules/productsAPI';
 import styled from 'styled-components';
 
 function Main() {

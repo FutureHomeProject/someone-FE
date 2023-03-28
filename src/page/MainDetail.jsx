@@ -1,9 +1,12 @@
+import axios from 'axios';
 import React, { useState } from 'react'
+import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import ReviewBox from '../components/mainpage/ReviewBox';
+import ReviewMap from '../components/mainpage/ReviewMap';
 import ReviewModal from '../components/ReviewModal';
 import products1 from '../img/produts/products1.webp'
 
@@ -19,6 +22,21 @@ function MainDetail() {
   const day = ["일","월","화","수","목","금","토"]
   const dayNum = diliveryDay.getDay() // 요일계산
   const [modal, setModal] = useState(false)
+
+  const getproductsreview = async () => {
+    // const  response = await axios.get(`${process.env.REACT_APP_SERVER_KEY}/todos`)
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_KEY}/products/reviews`);
+    console.log(response.data)
+    return response.data
+  }
+  // eslint-disable-next-line no-unused-vars
+  const {isLoading, isError, data} = useQuery("productsreview", getproductsreview, {
+    staleTime: 1000 * 60 * 3, // 5분
+  })
+  console.log(data);
+  // if(isLoading || isError) {
+  //   return (<div>로딩 중...</div>)
+  // }
   
   return (
     <>
@@ -26,7 +44,7 @@ function MainDetail() {
       <ProductsDiv>
         {/* 이미지 */}
         <div>
-          <img src={products1} width="100%" />
+          <img src={products1} width="100%" alt='상품이미지'/>
         </div>
         <div >
           <Title>LG전자</Title>
@@ -51,7 +69,10 @@ function MainDetail() {
         </div>
       </ProductsDiv>
       <ReviewBox onClick={()=>setModal(pre=>!pre)}/>
-
+      <ReviewMap/>
+      <ReviewMap/>
+      <ReviewMap/>
+      <ReviewMap/>
       <div style={{ position: "sticky", bottom: "0px", padding:"20px 0", background:"white"}}>
         <button style={{width:"100%", height:"50px", border:"none", background:"skyblue", fontSize:"1.5rem", color:"white", fontWeight:"700", borderRadius:"10px"}}>구매하기</button>
       </div>

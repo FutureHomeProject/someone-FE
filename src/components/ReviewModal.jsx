@@ -6,8 +6,11 @@ import {BsFillStarFill} from 'react-icons/bs'
 import jwt_decode from 'jwt-decode';
 import { useValidate } from '../hook/useValidate';
 import Cookies from 'universal-cookie';
+import { useMutation, useQueryClient } from 'react-query';
+import axios from 'axios';
 
 export const cookies = new Cookies();
+
 
 const ReviewModal = ({productId, modal, setModal, marketer, img, productsName }) => {
   const [cancleModal, setCancleModal] = useState(false)
@@ -26,14 +29,45 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
       setImgFile(reader.result)
     }
   }
+
+  
+  const qureyClient = useQueryClient();
+  const { mutate : postproducts } = useMutation({
+    mutationFn : async ({productId,token,nickname,comment,reviewpoint}) => {
+      // const data = await axios.post(`${process.env.REACT_APP_SERVER_KEY}/products/${+productId}/reviews/write`, {nickname,comment,reviewpoint}, {
+        const data = await axios.post(`${process.env.REACT_APP_SERVER_KEY}/products/8/reviews/write`, {nickname,comment,reviewpoint}, {
+        headers : {
+          Authorization : `Bearer ${token}`
+        }
+      })
+      return data.status
+    },
+
+    onSuccess: (data) => {
+      switch (data) {
+        case 200 :
+          alert("승인")
+          qureyClient.invalidateQueries('productsreview')
+          return 
+        default :
+          return  
+      }
+    },
+    onError: (error) => {
+      alert("에러 발생 ")
+    }
+  })
+
+
+
+
   const token = cookies.get('token')
-  if(token) {
-    const {nickname} = jwt_decode(token);
-  }
+  const {nickname} = jwt_decode(token);
   const onSubmitHandler = (e) => {
       e.preventDefault();
       const reviewpoint = document.querySelector('input[name="selectstar"]:checked');
-      if(reviewpoint) {
+      if(token && reviewpoint) {
+        postproducts({productId,token,nickname,comment:textarea,reviewpoint: reviewpoint.value,imgFile})
         // console.log({
         //   productId,
         //   nickname,
@@ -41,7 +75,7 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
         //   reviewpoint: reviewpoint.value,
         //   imgFile,
         // });
-        console.log(imgFile)
+        // console.log(imgFile)
         setModal((pre) => !pre);
         setTextarea('');
         setImgFile('');
@@ -50,6 +84,8 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
         alert("만족도 평가를 체크해 주세요.")
       }
   }
+
+  
 
   return (
     <>
@@ -67,6 +103,7 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
             <div>
               <img
                 src={img}
+                alt="포토리뷰포인트"
                 width="100%"
                 style={{ display: "block", borderRadius: "10px" }}
               />
@@ -146,7 +183,7 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
             </div>
             <div className="photoupload">
               <p>사진첨부(선택)</p>
-              <img src={photopoint} height="30" />
+              <img src={photopoint} height="30" alt='포인트이미지'/>
             </div>
             {imgFile && (
               <div style={{ position: "relative", margin: "20px 0" }}>
