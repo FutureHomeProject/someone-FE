@@ -7,11 +7,13 @@ import { useMutation, useQueryClient } from 'react-query'
 import Cookies from 'universal-cookie'
 import axios from 'axios'
 import jwt_decode from 'jwt-decode';
+import { useParams } from 'react-router-dom'
 
 const cookies = new Cookies();
 
-function ReviewMap() {   // 멥으로 돌리니 상품, 리뷰id를 구할 수 있을 것이고
-  const starsCount = 3.4; // 별점의 개수
+function ReviewMap({comments}) {
+  const params = useParams()
+  const starsCount = +comments.reviewpoint; // 별점의 개수
   const emptystar = 5 - Math.round(starsCount)
   const stars = []
   const emptystars = []
@@ -29,7 +31,7 @@ function ReviewMap() {   // 멥으로 돌리니 상품, 리뷰id를 구할 수 �
   const { mutate : deleteproducts } = useMutation({
     mutationFn : async () => {
       // const data = await axios.post(`${process.env.REACT_APP_SERVER_KEY}/products/${+productId}/reviews/write`, {nickname,comment,reviewpoint}, {
-        const data = await axios.delete(`${process.env.REACT_APP_SERVER_KEY}/products/{product-id}/reviews/{review-id}`, {
+        const data = await axios.delete(`${process.env.REACT_APP_SERVER_KEY}/products/${+params}/reviews/${comments.id}`, {
         headers : {
           Authorization : `Bearer ${token}`
         }
@@ -61,22 +63,22 @@ function ReviewMap() {   // 멥으로 돌리니 상품, 리뷰id를 구할 수 �
           <CgProfile />
         </div>
         <div>
-          <p>userName</p>
+          <p>{comments.nickname}</p>
           <p>
             <span className="star">{stars}</span>
             <span className="emptystars">
-              {emptystars} 2023.01.11 • 오늘의 집 구매
+              {emptystars} {comments.createdAt.split(" ")[0]} • 오늘의 집 구매
             </span>
           </p>
         </div>
-        {nickname === 'edwin' && (
+        {nickname === 'ed' && (
           <div className="editebtns">
             <button>수정하기</button>
             <button onClick={() => deleteproducts()}>삭제하기</button>
           </div>
         )}
       </PurchaseHistory>
-      <PuductsName>제품명</PuductsName>
+      <PuductsName>{comments.name}</PuductsName>
       <p>
         <img
           src={products1}
@@ -85,7 +87,7 @@ function ReviewMap() {   // 멥으로 돌리니 상품, 리뷰id를 구할 수 �
           style={{ borderRadius: "10px" }}
         />
       </p>
-      <p>코멘트가 들어갈 내용</p>
+      <p>{comments.comment}</p>
     </Layout>
   );
 }

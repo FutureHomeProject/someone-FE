@@ -31,32 +31,42 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
   }
 
   
-  const qureyClient = useQueryClient();
+  const queryClient = useQueryClient();
   const { mutate : postproducts } = useMutation({
-    mutationFn : async ({productId,token,nickname,comment,reviewpoint}) => {
-      // const data = await axios.post(`${process.env.REACT_APP_SERVER_KEY}/products/${+productId}/reviews/write`, {nickname,comment,reviewpoint}, {
-        const data = await axios.post(`${process.env.REACT_APP_SERVER_KEY}/products/8/reviews/write`, {nickname,comment,reviewpoint}, {
-        headers : {
-          Authorization : `Bearer ${token}`
+    mutationFn : async ({productId,token,nickname,comment,reviewpoint, imgFile}) => {
+      const formData = new FormData();
+      formData.append('nickname', nickname);
+      formData.append('comment', comment);
+      formData.append('reviewpoint', reviewpoint);
+      formData.append('image', imgFile);
+  
+      const data = await axios.post(
+        `${process.env.REACT_APP_SERVER_KEY}/products/${productId}/reviews/write`,
+        formData,
+        {
+          headers : {
+            'Content-Type': 'multipart/form-data',
+            Authorization : `Bearer ${token}`
+          }
         }
-      })
+      )
       return data.status
     },
-
     onSuccess: (data) => {
       switch (data) {
         case 200 :
           alert("승인")
-          qureyClient.invalidateQueries('productsreview')
+          queryClient.invalidateQueries('productsreview')
           return 
         default :
           return  
       }
     },
     onError: (error) => {
-      alert("에러 발생 ")
+      console.log(error);
     }
   })
+  
 
 
 

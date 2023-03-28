@@ -25,37 +25,47 @@ function MainDetail() {
 
   const getproductsreview = async () => {
     // const  response = await axios.get(`${process.env.REACT_APP_SERVER_KEY}/todos`)
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_KEY}/products/reviews`);
-    console.log(response.data)
-    return response.data
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_KEY}/products/3`);
+    // console.log(response.data.data)
+    // return response.data.data.reviewList
+    return response.data.data
   }
   // eslint-disable-next-line no-unused-vars
   const {isLoading, isError, data} = useQuery("productsreview", getproductsreview, {
     staleTime: 1000 * 60 * 3, // 5분
   })
-  console.log(data);
   // if(isLoading || isError) {
   //   return (<div>로딩 중...</div>)
   // }
+  // console.log(data?.reviewList);
+  const reviewList = data?.reviewList
   
+  // if(isLoading || isError) {
+  //   return <div> 로딩 중...</div>
+  // }
+
   return (
     <>
       <Header />
       <ProductsDiv>
         {/* 이미지 */}
         <div>
-          <img src={products1} width="100%" alt='상품이미지'/>
+          <img src={products1} width="100%" alt="상품이미지" />
         </div>
-        <div >
+        <div>
           <Title>LG전자</Title>
-          <ProductName>[오늘의딜] 트롬 워시타워 W20WAN 세탁23kg 건조20kg</ProductName>
+          <ProductName>
+            [오늘의딜] 트롬 워시타워 W20WAN 세탁23kg 건조20kg
+          </ProductName>
           <Review>리뷰 752개</Review>
           <Sale>
             43% <span>{price}원</span>
           </Sale>
           <Subtitle>
             <p>혜택</p>
-            <div><span>{price / 1000}</span>P 적립</div>
+            <div>
+              <span>{price / 1000}</span>P 적립
+            </div>
           </Subtitle>
           <Subtitle>
             <p>배송</p>
@@ -63,21 +73,52 @@ function MainDetail() {
               <span>무료배송</span> <br /> 업체직접배송
             </div>
             <div>
-              <span style={{color:"skyblue", fontWeight:"900"}}>{months}/{date}({day[dayNum]})</span> 이내 도착 예정
+              <span style={{ color: "skyblue", fontWeight: "900" }}>
+                {months}/{date}({day[dayNum]})
+              </span>{" "}
+              이내 도착 예정
             </div>
           </Subtitle>
         </div>
       </ProductsDiv>
-      <ReviewBox onClick={()=>setModal(pre=>!pre)}/>
-      <ReviewMap/>
-      <ReviewMap/>
-      <ReviewMap/>
-      <ReviewMap/>
-      <div style={{ position: "sticky", bottom: "0px", padding:"20px 0", background:"white"}}>
-        <button style={{width:"100%", height:"50px", border:"none", background:"skyblue", fontSize:"1.5rem", color:"white", fontWeight:"700", borderRadius:"10px"}}>구매하기</button>
+      <ReviewBox onClick={() => setModal((pre) => !pre)} />
+      {reviewList && reviewList.map((el) => (
+        <div key={el.id}>
+          <ReviewMap comments={el}/>
+        </div>
+      ))}
+      <div
+        style={{
+          position: "sticky",
+          bottom: "0px",
+          padding: "20px 0",
+          background: "white",
+        }}
+      >
+        <button
+          style={{
+            width: "100%",
+            height: "50px",
+            border: "none",
+            background: "skyblue",
+            fontSize: "1.5rem",
+            color: "white",
+            fontWeight: "700",
+            borderRadius: "10px",
+          }}
+        >
+          구매하기
+        </button>
       </div>
-      <ReviewModal productId={id} modal={modal} setModal={setModal} img={products1} marketer="LG전자" productsName="[오늘의딜] 트롬 워시타워 W20WAN 세탁23kg 건조20kg"/>
-      
+      <ReviewModal
+        productId={id}
+        modal={modal}
+        setModal={setModal}
+        img={products1}
+        marketer="LG전자"
+        productsName="[오늘의딜] 트롬 워시타워 W20WAN 세탁23kg 건조20kg"
+      />
+
       <Footer />
     </>
   );
