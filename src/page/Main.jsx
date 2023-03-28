@@ -8,15 +8,15 @@ import { getproducts } from '../redux/modules/productsAPI';
 import styled from 'styled-components';
 
 function Main() {
-  const { data, isLoading, isError } = useQuery('products', getproducts);
-  console.log(data?.data.data)
-  if (isLoading) {
-    return (<div>로딩 중....</div>)
-  }
+  // const { data, isLoading, isError } = useQuery('products', getproducts);
+  // console.log(data?.data.data)
+  // if (isLoading) {
+  //   return (<div>로딩 중....</div>)
+  // }
 
-  if (isError) {
-    return (<div>에러가 발생했습니다.</div>)
-  }
+  // if (isError) {
+  //   return (<div>에러가 발생했습니다.</div>)
+  // }
 
   return (
     <>

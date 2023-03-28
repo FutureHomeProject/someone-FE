@@ -73,7 +73,7 @@ function Header() {
           {/* 토큰이 있을 때 */}
           <HeaderDiv>
             <NavTop>
-              <div className="logo">누군가의집</div>
+              <div className="logo" onClick={()=>navigate("/")}>누군가의집</div>
               <div>
                 <div>커뮤니티</div>
                 <div>쇼핑</div>
