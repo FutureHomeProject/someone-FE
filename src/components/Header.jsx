@@ -16,16 +16,15 @@ function Header() {
   // eslint-disable-next-line은 ESLint의 경고 메시지를 무시하도록 지시하는 특별한 주석
   // no-unused-vars는 ESLint에서 제공하는 규칙 중 하나로, 사용되지 않는 변수가 있는 경우 경고를 표시
   const token = cookies.get('token')
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const onsignout = () => {
     cookies.remove('token')
-    setSignout(pre => !pre)
+    setSignout((pre) => !pre)
   }
 
   const onWrite = () => {
-    navigate('/House')
+    navigate('/house/write')
   }
-
 
   return (
     <>
@@ -43,21 +42,14 @@ function Header() {
               <div>
                 <div>
                   <div>
-                    <RxMagnifyingGlass/>
+                    <RxMagnifyingGlass />
                   </div>
                   <div>
                     <BsCart />
                   </div>
                 </div>
-                <div
-                  onClick={() => navigate("/signin")}
-                >
-                  로그인
-                </div>
-                <div
-                  className="authorization"
-                  onClick={() => navigate("/signup")}
-                >
+                <div onClick={() => navigate('/signin')}>로그인</div>
+                <div className="authorization" onClick={() => navigate('/signup')}>
                   회원가입
                 </div>
               </div>
@@ -82,18 +74,13 @@ function Header() {
                 <div>
                   <RxMagnifyingGlass />
                 </div>
-                <div className='icons'>
+                <div className="icons">
                   <BsCart />
                 </div>
                 <div><CgProfile/></div>
                 <div onClick={onsignout}>로그아웃</div>
                 <div onClick={onWrite}>
-                  <StyledButton
-                    width="70px"
-                    height="40px"
-                    color="white"
-                    innerText="글쓰기"
-                  />
+                  <StyledButton width="70px" height="40px" color="white" innerText="글쓰기" />
                 </div>
               </div>
             </NavTop>
@@ -106,7 +93,7 @@ function Header() {
         </>
       )}
     </>
-  );
+  )
 }
 
 export default Header
