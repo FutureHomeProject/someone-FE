@@ -11,8 +11,13 @@ import axios from 'axios';
 
 export const cookies = new Cookies();
 
+// 이쪽 수정해주시면 될것같은..
+const calcStarColor = (currentGrade, grade) => currentGrade >= grade
 
 const ReviewModal = ({productId, modal, setModal, marketer, img, productsName }) => {
+  const [currentGrade, setCurrentGrade] = useState(0)
+  const [currentHover, setCurrentHover] = useState(0)
+
   const [cancleModal, setCancleModal] = useState(false)
   const [hidden1, setHidden1] = useState(false)
   const [textarea, onTextareaHandler,setTextarea] = useValidate({tyep:"other"});
@@ -21,6 +26,7 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
   }
   const selectFile = useRef("");
   const [imgFile, setImgFile] = useState("");
+  
   const saveImgFile = () => {
     const file = selectFile.current.files[0]
     const reader = new FileReader()
@@ -30,6 +36,11 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
     }
   }
 
+
+const resetImgFile = () => {
+  setImgFile("")
+  selectFile.current.value = ""
+}
   
   const queryClient = useQueryClient();
   const { mutate : postproducts } = useMutation({
@@ -75,24 +86,26 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
   const {nickname} = jwt_decode(token);
   const onSubmitHandler = (e) => {
       e.preventDefault();
-      const reviewpoint = document.querySelector('input[name="selectstar"]:checked');
-      if(token && reviewpoint) {
-        postproducts({productId,token,nickname,comment:textarea,reviewpoint: reviewpoint.value,imgFile})
-        // console.log({
-        //   productId,
-        //   nickname,
-        //   comment:textarea,
-        //   reviewpoint: reviewpoint.value,
-        //   imgFile,
-        // });
-        // console.log(imgFile)
-        setModal((pre) => !pre);
-        setTextarea('');
-        setImgFile('');
-        setImgFile('')
-      } else {
-        alert("만족도 평가를 체크해 주세요.")
-      }
+      console.log(e);
+      // const reviewpoint = document.querySelector('input[name="selectstar"]:checked');
+      // // console.log(reviewpoint);
+      // if(token && reviewpoint) {
+      //   postproducts({productId,token,nickname,comment:textarea,reviewpoint: reviewpoint.value,imgFile})
+      //   // console.log({
+      //   //   productId,
+      //   //   nickname,
+      //   //   comment:textarea,
+      //   //   reviewpoint: reviewpoint.value,
+      //   //   imgFile,
+      //   // });
+      //   // console.log(imgFile)
+      //   setModal((pre) => !pre);
+      //   setTextarea('');
+      //   setImgFile('');
+      //   setImgFile('')
+      // } else {
+      //   alert("만족도 평가를 체크해 주세요.")
+      // }
   }
 
   
@@ -132,8 +145,8 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
             <p>만족도</p>
             <div>
               <ul className="starUl">
-                <li className="radioInputStar">
-                  <label htmlFor="radio-input1">
+                <StarWrap onMouseEnter={()=>setCurrentGrade(1)} className="radioInputStar" isOn={calcStarColor(currentGrade, 1)} isHover={calcStarColor(currentHover, 1)} >
+                  <label htmlFor="radio-input1" onClick={()=>setCurrentGrade(1)}>
                     <input
                       type="radio"
                       value="1"
@@ -144,9 +157,9 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
                       <BsFillStarFill />
                     </span>
                   </label>
-                </li>
-                <li className="radioInputStar">
-                  <label htmlFor="radio-input2">
+                </StarWrap>
+                <StarWrap onMouseEnter={()=>setCurrentHover(2)} className="radioInputStar" isOn={calcStarColor(currentGrade, 2)} isHover={calcStarColor(currentHover, 2)}>
+                  <label htmlFor="radio-input2"  onClick={()=>setCurrentGrade(2)}>
                     <input
                       type="radio"
                       value="2"
@@ -155,9 +168,9 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
                     />
                     <BsFillStarFill />
                   </label>
-                </li>
-                <li className="radioInputStar">
-                  <label htmlFor="radio-input3">
+                </StarWrap>
+                <StarWrap onMouseEnter={()=>setCurrentHover(3)} className="radioInputStar" isOn={calcStarColor(currentGrade, 3)} isHover={calcStarColor(currentHover, 3)}>
+                  <label htmlFor="radio-input3"  onClick={()=>setCurrentGrade(3)}>
                     <input
                       type="radio"
                       value="3"
@@ -166,9 +179,9 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
                     />
                     <BsFillStarFill />
                   </label>
-                </li>
-                <li className="radioInputStar">
-                  <label htmlFor="radio-input4">
+                </StarWrap>
+                <StarWrap onMouseEnter={()=>setCurrentHover(4)} className="radioInputStar" isOn={calcStarColor(currentGrade, 4)} isHover={calcStarColor(currentHover, 4)}>
+                  <label htmlFor="radio-input4" onClick={()=>setCurrentGrade(4)}>
                     <input
                       type="radio"
                       value="4"
@@ -177,9 +190,9 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
                     />
                     <BsFillStarFill />
                   </label>
-                </li>
-                <li className="radioInputStar">
-                  <label htmlFor="radio-input5">
+                </StarWrap>
+                <StarWrap onMouseEnter={()=>setCurrentHover(5)} className="radioInputStar" isOn={calcStarColor(currentGrade,5 )} isHover={calcStarColor(currentHover, 5)}>
+                  <label htmlFor="radio-input5" onClick={()=>setCurrentGrade(5)}>
                     <input
                       type="radio"
                       value="5"
@@ -188,7 +201,7 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
                     />
                     <BsFillStarFill />
                   </label>
-                </li>
+                </StarWrap>
               </ul>
             </div>
             <div className="photoupload">
@@ -205,7 +218,7 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
                 <div style={{ position: "absolute", top: "0", right: "0" }}>
                   <button
                     className="photoDelete"
-                    onClick={() => setImgFile("")}
+                    onClick={resetImgFile}
                   >
                     삭제
                   </button>
@@ -228,7 +241,7 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
             <h3>리뷰작성</h3>
             <div style={{ position: "relative" }}>
               <textarea
-                required
+                // required
                 minLength="20"
                 value={textarea}
                 onChange={onTextareaHandler}
@@ -247,6 +260,9 @@ const ReviewModal = ({productId, modal, setModal, marketer, img, productsName })
             </div>
             <button className="onSubmitbtn">완료</button>
           </form>
+
+
+          
           <Writeguide>
             <div className="viewdiv" onClick={hiddenToggle1}>
               <h4>누군가의집의 리뷰 정책</h4>
@@ -438,8 +454,15 @@ const ModalWindow = styled.div`
     }
   }
   .radioInputStar {
-    &:hover {color: #6BD1F0;}
+    &:hover{
+      color: #6BD1F0;
+    }
   }
+  .radioInputStar input[type="checked"] {
+    color: #6BD1F0;
+  }
+
+
 
 
   .photoupload {
@@ -562,3 +585,19 @@ const Writeguide = styled.div`
 const Hiddendiv = styled.div`
   display: ${(props) => (props.displaystate ? 'block' : 'none')};
 `
+
+
+
+// isOn을 Props로 받아서
+const StarWrap = styled.li`
+  svg {
+    color: ${({isOn})=> isOn ? '#6BD1F0' : 'lightgrey'};
+    color: ${({isHover})=> isHover ? '#82E0FA' : 'lightgrey'};
+  }
+  &:hover {
+    svg {
+    color: #6BD1F0
+  }
+  }
+`
+
