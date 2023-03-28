@@ -95,14 +95,14 @@ function Footer() {
           </ThirdOfFist>
           <ThirdOfSecon>
             <div>
-              <img src="https://assets.ohou.se/design-system/8f5b2c2e98ea1196.png" width="32" height="32" />
+              <img src="https://assets.ohou.se/design-system/8f5b2c2e98ea1196.png" width="32" height="32" alt='' />
               <div>
                 오늘의 집 서비스 운영 <br />
                 2021.09.08 ~ 2024.09.07
               </div>
             </div>
             <div>
-              <img src="https://assets.ohou.se/design-system/d5fb816a58bb6a06.png" width="32" height="32" />
+              <img src="https://assets.ohou.se/design-system/d5fb816a58bb6a06.png" width="32" height="32" alt=''/>
               <div>
                 고객님이 현금결제한 금액에 대해 우리은행과 채무지급보증 계약을 체결하여 안전거래를 보장하고 있습니다.
                 <span>서비스가입사실확인</span>

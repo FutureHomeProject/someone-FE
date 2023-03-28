@@ -5,7 +5,6 @@ export const useConfirm = (setModal, setErrModal,setErrormsg) => {
   
   const { mutate: confirm } = useMutation({
     mutationFn : async ([type, confirm]) => {
-      console.log(type, confirm)
       let data;
       if (type === "email") {
         data = await axios.post(`${process.env.REACT_APP_SERVER_KEY}/users/confirm-email`, confirm) 

@@ -42,8 +42,15 @@ function Singup() {
      e.preventDefault();
      if(emailValidate && passwordValidate && checkpwvalidate && otherValidate) {
       signup({email, password, nickname})
-     } else {
+      return
+     } 
+     if(!passwordValidate) {
+      alert("비밀번호가 형식에 맞지 않습니다.")
+      return
+     }
+     else {
       alert("입력되지 않은 내용이 있습니다.")
+      return
      }
   };
 

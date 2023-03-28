@@ -9,8 +9,7 @@ import styled from 'styled-components';
 
 function Main() {
   // const { data, isLoading, isError } = useQuery('products', getproducts);
-  // console.log(data);
-
+  // console.log(data?.data.data)
   // if (isLoading) {
   //   return (<div>로딩 중....</div>)
   // }
