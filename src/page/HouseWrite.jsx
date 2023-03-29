@@ -7,7 +7,9 @@ import { BsTextParagraph, BsPencilSquare } from 'react-icons/bs'
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl'
 import { useNavigate } from 'react-router-dom'
 import { HeaderDiv, NavTop } from '../css/commenCss.jsx'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient, QueryClient } from 'react-query'
+import { useCallback } from 'react'
+import { useDropzone } from 'react-dropzone'
 
 const House = () => {
   const navigate = useNavigate()
@@ -47,24 +49,57 @@ const House = () => {
     nickname: '',
     region: '',
     title: '',
+    image: '',
   })
 
   const changeInputHandler = (event) => {
     const { value, name } = event.target
     setHouse((pre) => ({ ...pre, [name]: value }))
   }
+
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationFn: async (payload) => {
       console.log('payload-->', payload)
-      axios.post(`http://43.201.116.11:8080/houses`, payload)
+      axios.post('http://43.201.116.11:8080/houses/write', payload)
     },
     onSuccess: () => {
       window.alert('추가 성공!')
     },
   })
+
+  const queryClient = new QueryClient()
+
+  const uploadImage = async (file) => {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    const response = await axios.post('http://43.201.116.11:8080/houses/write', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+
+    return response.data.url
+  }
+
+  const onDrop = useCallback(
+    async (acceptedFiles) => {
+      const file = acceptedFiles[0]
+
+      const imageUrl = await uploadImage(file)
+
+      queryClient.setQueryData('image', imageUrl)
+    },
+    [queryClient]
+  )
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
+  const { imgMutate } = useMutation(uploadImage)
+
   return (
     <>
-      <HeaderDiv onClick={() => navigate('/')}>
+      <HeaderDiv onClick={() => navigate('/houses')}>
         <NavTop>
           <div className="logo">누군가의집</div>
           <div></div>
@@ -281,20 +316,27 @@ const House = () => {
         <ImgBox>
           <BoxDiv>
             <button>
-              <div>
-                <p>드래그 앤 드롭이나 추가하기 버튼으로</p>
-                <p> 커버 사진을 업로드 해주세요.</p>
+              <div {...getRootProps()}>
+                <div>
+                  <p>드래그 앤 드롭이나 추가하기 버튼으로</p>
+                  <p> 커버 사진을 업로드 해주세요.</p>
+                </div>
+                <div>
+                  <input {...getInputProps()} value={house.image} name="image" onChange={changeInputHandler} />
+                  <p>
+                    {' '}
+                    <p>
+                      *권장 사이즈
+                      <br />
+                      모바일: 1920 x 1080,최소 1400 x 1400(1:1 비율)
+                      <br />
+                      PC:1920 x 1080,최소 1400 x 787(16:9 비율)
+                    </p>
+                  </p>
+                  {queryClient.getQueryData('image') && <img src={queryClient.getQueryData('image')} alt="preview" />}
+                </div>
+                <div>커버 사진 추가하기</div>
               </div>
-              <div>
-                <p>
-                  *권장 사이즈
-                  <br />
-                  모바일: 1920 x 1080,최소 1400 x 1400(1:1 비율)
-                  <br />
-                  PC:1920 x 1080,최소 1400 x 787(16:9 비율)
-                </p>
-              </div>
-              <div>커버 사진 추가하기</div>
             </button>
           </BoxDiv>
         </ImgBox>

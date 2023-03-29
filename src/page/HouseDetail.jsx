@@ -56,7 +56,6 @@ const ExDiv = styled.div`
 const ProfileDiv = styled.div`
   display: flex;
   gap: 10px;
-  size: 20px;
 `
 const DeDiv = styled.div`
   margin-top: 30px;
