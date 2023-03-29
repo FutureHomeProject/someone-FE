@@ -89,5 +89,62 @@
       "body": "some comment",
       "postId": 1
     }
-  ]
+  ],
+  "signup": [
+    {
+      "id": 1,
+      "email": "g@g.com",
+      "password": "a!12345678",
+      "nickname": "Edwin"
+    },
+    {
+      "email": "gg@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
+      "id": 2
+    },
+    {
+      "email": "gg@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
+      "id": 3
+    },
+    {
+      "email": "gg@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
+      "id": 4
+    },
+    {
+      "email": "gg@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
+      "id": 5
+    },
+    {
+      "email": "gg@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
+      "id": 6
+    },
+    {
+      "email": "gg@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
+      "id": 7
+    },
+    {
+      "email": "g@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
+      "id": 8
+    },
+    {
+      "email": "gg@g.com",
+      "password": "a!12345678",
+      "nickname": "edwin",
+      "id": 9
+    },
+    
+  ],
 }
