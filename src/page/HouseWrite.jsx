@@ -99,7 +99,7 @@ const House = () => {
 
   return (
     <>
-      <HeaderDiv onClick={() => navigate('/houses')}>
+      <HeaderDiv>
         <NavTop>
           <div className="logo">누군가의집</div>
           <div></div>
@@ -108,13 +108,12 @@ const House = () => {
               width="150px"
               height="40px"
               color="white"
-              innerText="발행"
+              innerText={isLoading ? '등록중....' : '발행'}
               diabled={isLoading}
               onClick={() => {
                 mutate(house)
               }}
             />
-            {isLoading ? '등록중....' : '추가하기'}
           </div>
         </NavTop>
       </HeaderDiv>

@@ -11,7 +11,7 @@ export const cookies = new Cookies()
 
 function Header() {
   // eslint-disable-next-line no-unused-vars
-  const [signout, setSignout] = useState(false) // 토큰이 없어졌을 때 리렌더링을 위해, signout 을 사용하지 않으면 경고가 뜨는데, 13번줄의 각주로 이를 넘어갈 수 있다. 
+  const [signout, setSignout] = useState(false) // 토큰이 없어졌을 때 리렌더링을 위해, signout 을 사용하지 않으면 경고가 뜨는데, 13번줄의 각주로 이를 넘어갈 수 있다.
   // ESLint는 JavaScript 코드에서 일관성 있는 스타일과 에러를 검출하고, 코드 품질을 향상시키기 위해 사용되는 정적 코드 분석 도구
   // eslint-disable-next-line은 ESLint의 경고 메시지를 무시하도록 지시하는 특별한 주석
   // no-unused-vars는 ESLint에서 제공하는 규칙 중 하나로, 사용되지 않는 변수가 있는 경우 경고를 표시
@@ -33,9 +33,11 @@ function Header() {
           <HeaderDiv>
             {/* 토큰이 없을 때 */}
             <NavTop>
-              <div className="logo" onClick={()=>navigate("/")}>누군가의집</div>
+              <div className="logo" onClick={() => navigate('/')}>
+                누군가의집
+              </div>
               <div>
-                <div>커뮤니티</div>
+                <div onClick={() => navigate('/houses')}>커뮤니티</div>
                 <div>쇼핑</div>
               </div>
 
@@ -65,7 +67,9 @@ function Header() {
           {/* 토큰이 있을 때 */}
           <HeaderDiv>
             <NavTop>
-              <div className="logo" onClick={()=>navigate("/")}>누군가의집</div>
+              <div className="logo" onClick={() => navigate('/')}>
+                누군가의집
+              </div>
               <div>
                 <div>커뮤니티</div>
                 <div>쇼핑</div>
@@ -77,7 +81,9 @@ function Header() {
                 <div className="icons">
                   <BsCart />
                 </div>
-                <div><CgProfile/></div>
+                <div>
+                  <CgProfile />
+                </div>
                 <div onClick={onsignout}>로그아웃</div>
                 <div onClick={onWrite}>
                   <StyledButton width="70px" height="40px" color="white" innerText="글쓰기" />
