@@ -1,4 +1,3 @@
-//House.jsx
 import React, { useState } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
@@ -10,8 +9,10 @@ import { HeaderDiv, NavTop } from '../css/commenCss.jsx'
 import { useMutation, useQueryClient, QueryClient } from 'react-query'
 import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
+import { cookies } from '../components/ReviewModal'
+import { useRef } from 'react'
 
-const House = () => {
+const HouseWrite = () => {
   const navigate = useNavigate()
   const [hidden1, setHidden1] = useState(false)
   const hiddenToggle1 = () => {
@@ -22,25 +23,11 @@ const House = () => {
     setHidden2((pre) => !pre)
   }
   const [isChecked1, setIsChecked1] = useState(false)
-  const [isChecked2, setIsChecked2] = useState(false)
-  const [isChecked3, setIsChecked3] = useState(false)
+
+  const SelectImage = useRef('')
 
   const handleCheck1 = () => {
     setIsChecked1(true)
-    setIsChecked2(false)
-    setIsChecked3(false)
-  }
-
-  const handleCheck2 = () => {
-    setIsChecked1(false)
-    setIsChecked2(true)
-    setIsChecked3(false)
-  }
-
-  const handleCheck3 = () => {
-    setIsChecked1(false)
-    setIsChecked2(false)
-    setIsChecked3(true)
   }
   const [house, setHouse] = useState({
     average: '',
@@ -54,13 +41,17 @@ const House = () => {
 
   const changeInputHandler = (event) => {
     const { value, name } = event.target
-    setHouse((pre) => ({ ...pre, [name]: value }))
+    if (name === 'image') {
+      setHouse((pre) => ({ ...pre, [name]: event.target.files[0] })) // 수정
+    } else {
+      setHouse((pre) => ({ ...pre, [name]: value }))
+    }
   }
 
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationFn: async (payload) => {
       console.log('payload-->', payload)
-      axios.post('http://43.201.116.11:8080/houses/write', payload)
+      await axios.post(`${process.env.REACT_APP_SERVER_KEY}/houses/write`, payload)
     },
     onSuccess: () => {
       window.alert('추가 성공!')
@@ -68,34 +59,44 @@ const House = () => {
   })
 
   const queryClient = new QueryClient()
-
-  const uploadImage = async (file) => {
-    const formData = new FormData()
-    formData.append('file', file)
-
-    const response = await axios.post('http://43.201.116.11:8080/houses/write', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    })
-
-    return response.data.url
+  const releaseHandler = () => {
+    alert('hello')
+    //   const file = SelectImage.current.files[0]
+    //   console.log('file', file)
+    //   // console.log(SelectImage.current.value)
+    //   const formData = new FormData()
+    //   formData.append('image', file)
+    //   formData.append('dwellingtype', house.dwellingtype)
+    //   formData.append('region', house.region)
+    //   formData.append('average', house.average)
+    //   formData.append('title', house.title)
+    //   formData.append('contents', house.contents)
+    //   console.log(formData)
+    //   const token = cookies.get('token')
+    //   const response = axios.post(`${process.env.REACT_APP_SERVER_KEY}/houses/write`, formData, {
+    //     headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   console.log(response)
+    return
   }
 
-  const onDrop = useCallback(
-    async (acceptedFiles) => {
-      const file = acceptedFiles[0]
+  // const onDrop = useCallback(
+  //   async (acceptedFiles) => {
+  //     const file = acceptedFiles[0]
+  //     const imageUrl = await uploadImage(file)
+  //     queryClient.setQueryData('image', imageUrl)
+  //   },
+  //   [queryClient]
+  // )
 
-      const imageUrl = await uploadImage(file)
+  // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
-      queryClient.setQueryData('image', imageUrl)
-    },
-    [queryClient]
-  )
+  // const { imgMutate } = useMutation(uploadImage)
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
-
-  const { imgMutate } = useMutation(uploadImage)
+  /// Form 이거나 Button => 이벤트가 발생되어야 겠죠?
 
   return (
     <>
@@ -115,11 +116,9 @@ const House = () => {
               width="150px"
               height="40px"
               color="white"
-              innerText={isLoading ? '등록중....' : '발행'}
-              diabled={isLoading}
-              onClick={() => {
-                mutate(house)
-              }}
+              innerText="발행"
+              // diabled={isLoading}
+              onClick={releaseHandler}
             />
           </div>
         </NavTop>
@@ -236,14 +235,21 @@ const House = () => {
         <ImgBox>
           <BoxDiv>
             <button>
-              <div {...getRootProps()}>
+              <div>
                 <div>
                   <p>드래그 앤 드롭이나 추가하기 버튼으로</p>
                   <p> 커버 사진을 업로드 해주세요.</p>
                 </div>
                 <div>
-                  <input {...getInputProps()} value={house.image} name="image" onChange={changeInputHandler} />
-                  <p>
+                  <input
+                    ref={SelectImage}
+                    type="file"
+                    value={house.image}
+                    name="image"
+                    accept="image/*"
+                    onChange={changeInputHandler}
+                  />
+                  <div>
                     {' '}
                     <p>
                       *권장 사이즈
@@ -252,7 +258,7 @@ const House = () => {
                       <br />
                       PC:1920 x 1080,최소 1400 x 787(16:9 비율)
                     </p>
-                  </p>
+                  </div>
                   {queryClient.getQueryData('image') && <img src={queryClient.getQueryData('image')} alt="preview" />}
                 </div>
                 <div>커버 사진 추가하기</div>
@@ -285,7 +291,7 @@ const House = () => {
   )
 }
 
-export default House
+export default HouseWrite
 
 const Article = styled.article`
   width: 100%;
@@ -526,10 +532,13 @@ const TitleInput = styled.input`
 `
 const ContentInput = styled.input`
   display: flex;
+  flex-wrap: nowrap;
   font-size: 16px;
   margin: 0px auto;
   border: none;
   width: 80%;
+  padding: 10px;
+  margin-bottom: 20px;
   ::placeholder {
     color: #c5c5c5;
   }

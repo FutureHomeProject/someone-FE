@@ -71,7 +71,7 @@ function Header() {
                 누군가의집
               </div>
               <div>
-                <div>커뮤니티</div>
+                <div onClick={() => navigate('/houses')}>커뮤니티</div>
                 <div>쇼핑</div>
               </div>
               <div>

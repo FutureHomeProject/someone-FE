@@ -1,34 +1,69 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
+import { HeaderDiv, NavTop } from '../css/commenCss.jsx'
+import { useNavigate } from 'react-router-dom'
+import { StyledButton } from '../components/CommenButton'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import { useParams } from 'react-router-dom'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import { BsSymmetryHorizontal } from 'react-icons/bs'
 import styled from 'styled-components'
 import { BsEmojiSmile } from 'react-icons/bs'
+import Cookies from 'universal-cookie'
+
+export const cookies = new Cookies()
 
 const HouseDetail = () => {
   const { id } = useParams()
   console.log('ID -> ', id)
 
+  const navigate = useNavigate()
+
   const { data } = useQuery(['GET_HOUSE', id], async () => {
     const response = await axios.get(`http://43.201.116.11:8080/houses/${id}`)
-    console.log('data-->', data)
     return response.data
   })
+  console.log(data)
+  // const { data1 } = useQuery(['GET_COMMENTS', id], async () => {
+  //   const response = await axios.get(`http://43.201.116.11:8080/houses/${id}`)
+  //   console.log('data22-->', response.commentList)
+  //   return response.data.commentList
+  // })
 
-  console.log('data', data)
-
-  const { data1 } = useQuery(['GET_HOUSE', id], async () => {
-    const response = await axios.get(`http://43.201.116.11:8080/houses/${id}/comments/write`)
-    console.log('data-->', data)
-    return response.data
+  const [isComment, setIsComment] = useState({
+    comment: '',
   })
+
+  const changeCommentHandler = (event) => {
+    const { value } = event.target
+    setIsComment((pre) => ({ ...pre, comment: value }))
+  }
+
+  const { mutate, isLoading, isSuccess } = useMutation({
+    mutationFn: async (payload, id) => {
+      await axios.post(`${process.env.REACT_APP_SERVER_KEY}/houses/${payload.id}/comments/write`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+    },
+    onSuccess: () => {
+      window.alert('추가 성공 !')
+    },
+  })
+  const token = cookies.get('token')
 
   return (
     <>
-      <Header />
+      <HeaderDiv onClick={() => navigate('/house/write')}>
+        <NavTop>
+          <div className="logo">누군가의집</div>
+          <div>
+            <StyledButton width="150px" height="40px" color="white" innerText="발행" navigate />
+          </div>
+        </NavTop>
+      </HeaderDiv>
       <div>
         <img src={data?.image} alt={data?.image} />
         <ExDiv>
@@ -53,23 +88,39 @@ const HouseDetail = () => {
         <div>
           <div style={{ width: '60%', margin: 'auto' }}>댓글</div>
           <InputDiv>
-            <input placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다 :)" />
-            <button>입력</button>
+            <input
+              placeholder="칭찬과 격려의 댓글은 작성자에게 큰 힘이 됩니다 :)"
+              type="text"
+              value={isComment.comment}
+              name="comment"
+              onChange={changeCommentHandler}
+            />
+            <button
+              disabled={isLoading}
+              onClick={() => {
+                mutate({ id: data.id, comment: isComment.comment })
+                setIsComment({ comment: '' })
+              }}
+            >
+              {isLoading ? '등록' : '입력'}
+            </button>
           </InputDiv>
         </div>
-        <div>
-          {data1?.map((house) => {
+        {data &&
+          data.commentList &&
+          data.commentList.map((house) => {
             return (
-              <>
-                <div key={house?.id}>
-                  <img src={house?.image} alt={house?.comment} />
-                  <div>{house?.nickname}</div>
-                  <div>{house?.comment}</div>
+              <CommentDiv key={house?.id}>
+                <NickDiv>{house?.nickname}</NickDiv>
+                <div>{house?.comment}</div>
+                <div>
+                  <button>수정</button>
+                  <span>·</span>
+                  <button>삭제</button>
                 </div>
-              </>
+              </CommentDiv>
             )
           })}
-        </div>
       </div>
       <Footer />
     </>
@@ -117,8 +168,33 @@ const InputDiv = styled.div`
     }
   }
   button {
+    font-size: 14px;
     background-color: transparent;
     border: none;
+    color: #2fbdee;
+    cursor: pointer;
+  }
+`
+const CommentDiv = styled.div`
+  width: 60%;
+  margin: 20px auto;
+  div {
+    margin: 10px auto;
+    display: flex;
+    gap: 0px;
+  }
+  span {
     color: #d0d5d8;
   }
+  button {
+    font-size: 14px;
+    background-color: transparent;
+    border: none;
+    color: #2fbdee;
+    cursor: pointer;
+  }
+`
+
+const NickDiv = styled.div`
+  font-weight: 900;
 `
