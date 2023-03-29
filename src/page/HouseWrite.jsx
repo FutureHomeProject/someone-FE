@@ -101,7 +101,14 @@ const House = () => {
     <>
       <HeaderDiv>
         <NavTop>
-          <div className="logo">누군가의집</div>
+          <div
+            className="logo"
+            onClick={() => {
+              navigate('/')
+            }}
+          >
+            누군가의집
+          </div>
           <div></div>
           <div>
             <StyledButton
@@ -190,95 +197,9 @@ const House = () => {
                     <div>
                       <ul className="FirstFloorAverage" style={{ display: isChecked1 ? 'block' : 'none' }}>
                         <Span border="1px solid #FF6C6C" focusborder="3px solid #FFB5B5">
-                          <input type="text" />평
+                          <input type="text" name="average" id="average" value={house.average} onChange={changeInputHandler} />평
                         </Span>
-                      </ul>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <Rinput
-                        type="radio"
-                        htmlFor="check-box"
-                        onClick={handleCheck2}
-                        id="contactChoice2"
-                        name="average"
-                        value="secondFloor"
-                      />
-                      2층 단독/협소주택
-                    </div>
-                    <div>
-                      <ul className="SeocondFloorAverage" style={{ display: isChecked2 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="SeocondFloorAverage">연면젹</label>
-                          <Span border="1px solid #FF6C6C" focusborder="3px solid #FFB5B5">
-                            <input className="SeocondFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                      <ul className="SeocondFloorAverage" style={{ display: isChecked2 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="SeocondFloorAverage">1층</label>
-                          <Span border="1px solid black" focusborder="3px solid #BBEDFC">
-                            <input className="SeocondFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                      <ul className="SeocondFloorAverage" style={{ display: isChecked2 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="SeocondFloorAverage">2층</label>
-                          <Span border="1px solid black" focusborder="3px solid #BBEDFC">
-                            <input className="SeocondFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <Rinput
-                        type="radio"
-                        htmlFor="check-box"
-                        style={{ display: 'block' }}
-                        onClick={handleCheck3}
-                        id="contactChoice3"
-                        name="average"
-                        value="thirdFloor"
-                      />
-                      3층 이상 단독/협소주택
-                    </div>
-                    <div>
-                      <ul className="thirdFloorAverage" style={{ display: isChecked3 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="thirdFloorAverage">연면젹</label>
-                          <Span border="1px solid #FF6C6C" focusborder="3px solid #FFB5B5">
-                            <input className="thirdFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                      <ul className="thirdFloorAverage" style={{ display: isChecked3 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="thirdFloorAverage">1층</label>
-                          <Span border="1px solid black" focusborder="3px solid #BBEDFC">
-                            <input className="thirdFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                      <ul className="thirdFloorAverage" style={{ display: isChecked3 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="thirdFloorAverage">2층</label>
-                          <Span border="1px solid black" focusborder="3px solid #BBEDFC">
-                            <input className="thirdFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                      <ul className="thirdFloorAverage" style={{ display: isChecked3 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="thirdFloorAverage">3층</label>
-                          <Span border="1px solid black" focusborder="3px solid #BBEDFC">
-                            <input className="thirdFloorAverage" type="text" />평
-                          </Span>
-                        </div>
+                        {house.average}
                       </ul>
                     </div>
                   </li>
@@ -350,7 +271,14 @@ const House = () => {
           />
           {house.title}
         </TitleBox>
-        <input type="text" name="contents" value={house.contents} onChange={changeInputHandler} />
+        <Hr />
+        <ContentInput
+          type="text"
+          placeholder="내용을 입력해주세요"
+          name="contents"
+          value={house.contents}
+          onChange={changeInputHandler}
+        />
         {house.contents}
       </Article>
     </>
@@ -569,6 +497,11 @@ const BoxDiv = styled.div`
     }
   }
 `
+
+const Hr = styled.hr`
+  width: 80%;
+  background-color: #c5c5c5;
+`
 //글 쓰기 부분
 const TitleBox = styled.div`
   display: block;
@@ -577,12 +510,26 @@ const TitleBox = styled.div`
 `
 const TitleInput = styled.input`
   border: none;
+  margin: 0px auto;
   display: flex;
   justify-content: center;
   margin-top: 40px;
   width: 80%;
   height: 5rem;
   font-size: 36px;
+  ::placeholder {
+    color: #c5c5c5;
+  }
+  :focus {
+    outline: none;
+  }
+`
+const ContentInput = styled.input`
+  display: flex;
+  font-size: 16px;
+  margin: 0px auto;
+  border: none;
+  width: 80%;
   ::placeholder {
     color: #c5c5c5;
   }

@@ -61,8 +61,10 @@ const HouseDetail = () => {
           {data1?.map((house) => {
             return (
               <>
-                <div key={house.id}>
-                  <div>{house.comment}</div>
+                <div key={house?.id}>
+                  <img src={house?.image} alt={house?.comment} />
+                  <div>{house?.nickname}</div>
+                  <div>{house?.comment}</div>
                 </div>
               </>
             )
