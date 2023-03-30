@@ -11,6 +11,7 @@ import { BsSymmetryHorizontal } from 'react-icons/bs'
 import styled from 'styled-components'
 import { BsEmojiSmile } from 'react-icons/bs'
 import Cookies from 'universal-cookie'
+import jwt_decode from 'jwt-decode'
 
 export const cookies = new Cookies()
 
@@ -41,18 +42,24 @@ const HouseDetail = () => {
   }
 
   const { mutate, isLoading, isSuccess } = useMutation({
-    mutationFn: async (payload, id) => {
-      await axios.post(`${process.env.REACT_APP_SERVER_KEY}/houses/${payload.id}/comments/write`, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    mutationFn: async (payload) => {
+      console.log('payload', payload)
+      await axios.post(
+        `${process.env.REACT_APP_SERVER_KEY}/houses/${payload.id}/comments/write`,
+        { ...payload, nickname },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
     },
     onSuccess: () => {
       window.alert('추가 성공 !')
     },
   })
   const token = cookies.get('token')
+  const { nickname } = jwt_decode(token)
 
   return (
     <>

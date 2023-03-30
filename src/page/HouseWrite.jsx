@@ -51,7 +51,12 @@ const HouseWrite = () => {
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationFn: async (payload) => {
       console.log('payload-->', payload)
-      await axios.post(`${process.env.REACT_APP_SERVER_KEY}/houses/write`, payload)
+      await axios.post(`${process.env.REACT_APP_SERVER_KEY}/houses/write`, payload, {
+        headers: {
+          // 'Content-Type': 'multipart/form-data',
+          // Authorization: `Bearer ${token}`,
+        },
+      })
     },
     onSuccess: () => {
       window.alert('추가 성공!')
@@ -59,29 +64,29 @@ const HouseWrite = () => {
   })
 
   const queryClient = new QueryClient()
-  const releaseHandler = () => {
-    alert('hello')
-    //   const file = SelectImage.current.files[0]
-    //   console.log('file', file)
-    //   // console.log(SelectImage.current.value)
-    //   const formData = new FormData()
-    //   formData.append('image', file)
-    //   formData.append('dwellingtype', house.dwellingtype)
-    //   formData.append('region', house.region)
-    //   formData.append('average', house.average)
-    //   formData.append('title', house.title)
-    //   formData.append('contents', house.contents)
-    //   console.log(formData)
-    //   const token = cookies.get('token')
-    //   const response = axios.post(`${process.env.REACT_APP_SERVER_KEY}/houses/write`, formData, {
-    //     headers: {
-    //       'Content-Type': 'multipart/form-data',
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   })
-    //   console.log(response)
-    return
-  }
+  // const releaseHandler = () => {
+  //   alert('hello')
+  //      const file = SelectImage.current.files[0]
+  //      console.log('file', file)
+  //      console.log(SelectImage.current.value)
+  //      const formData = new FormData()
+  //      formData.append('image', file)
+  //      formData.append('dwellingtype', house.dwellingtype)
+  //      formData.append('region', house.region)
+  //      formData.append('average', house.average)
+  //      formData.append('title', house.title)
+  //      formData.append('contents', house.contents)
+  //      console.log(formData)
+  //      const token = cookies.get('token')
+  //      const response = axios.post(`${process.env.REACT_APP_SERVER_KEY}/houses/write`, formData, {
+  //        headers: {
+  //          'Content-Type': 'multipart/form-data',
+  //          Authorization: `Bearer ${token}`,
+  //        },
+  //      })
+  //      console.log(response)
+  //   return
+  // }
 
   // const onDrop = useCallback(
   //   async (acceptedFiles) => {
@@ -117,8 +122,10 @@ const HouseWrite = () => {
               height="40px"
               color="white"
               innerText="발행"
-              // diabled={isLoading}
-              onClick={releaseHandler}
+              disabled={isLoading}
+              onClick={() => {
+                mutate()
+              }}
             />
           </div>
         </NavTop>
