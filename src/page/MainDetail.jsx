@@ -25,7 +25,7 @@ function MainDetail() {
 
   const getproductsreview = async () => {
     // const  response = await axios.get(`${process.env.REACT_APP_SERVER_KEY}/todos`)
-    const response = await axios.get(`${process.env.REACT_APP_SERVER_KEY}/products/3`);
+    const response = await axios.get(`${process.env.REACT_APP_SERVER_KEY}/products/1`);
     // console.log(response.data.data)
     // return response.data.data.reviewList
     return response.data.data
@@ -39,6 +39,7 @@ function MainDetail() {
   // }
   // console.log(data?.reviewList);
   const reviewList = data?.reviewList
+  console.log(reviewList)
   
   // if(isLoading || isError) {
   //   return <div> 로딩 중...</div>
@@ -82,7 +83,7 @@ function MainDetail() {
         </div>
       </ProductsDiv>
       <ReviewBox onClick={() => setModal((pre) => !pre)} />
-      {reviewList && reviewList.map((el) => (
+      {reviewList && reviewList.reverse().map((el) => (
         <div key={el.id}>
           <ReviewMap comments={el}/>
         </div>

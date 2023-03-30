@@ -30,7 +30,7 @@ export const __postsignin = createAsyncThunk(
     }
 
   }
-})
+)
 
 const initialState = {
   isLoding: false,

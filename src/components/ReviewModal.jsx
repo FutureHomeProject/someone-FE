@@ -44,19 +44,26 @@ const resetImgFile = () => {
   
   const queryClient = useQueryClient();
   const { mutate : postproducts } = useMutation({
-    mutationFn : async ({productId,token,nickname,comment,reviewpoint, imgFile}) => {
-      const formData = new FormData();
-      formData.append('nickname', nickname);
-      formData.append('comment', comment);
-      formData.append('reviewpoint', reviewpoint);
-      formData.append('image', imgFile);
-  
+    // mutationFn : async ({productId,token,nickname,comment,reviewpoint, imgFile}) => {
+    mutationFn : async (formData) => {
+      // const formData = new FormData();
+      // formData.append('nickname', nickname);
+      // formData.append('comment', comment);
+      // formData.append('reviewpoint', reviewpoint);
+      // formData.append('image', imgFile);
+      // console.log(imgFile);
+      // console.log(formData);
+
+      for (let pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+      }
+
       const data = await axios.post(
         `${process.env.REACT_APP_SERVER_KEY}/products/${productId}/reviews/write`,
         formData,
         {
           headers : {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
             Authorization : `Bearer ${token}`
           }
         }
@@ -78,34 +85,39 @@ const resetImgFile = () => {
     }
   })
   
-
-
-
-
   const token = cookies.get('token')
   const {nickname} = jwt_decode(token);
   const onSubmitHandler = (e) => {
       e.preventDefault();
       console.log(e);
-      // const reviewpoint = document.querySelector('input[name="selectstar"]:checked');
-      // // console.log(reviewpoint);
-      // if(token && reviewpoint) {
-      //   postproducts({productId,token,nickname,comment:textarea,reviewpoint: reviewpoint.value,imgFile})
-      //   // console.log({
-      //   //   productId,
-      //   //   nickname,
-      //   //   comment:textarea,
-      //   //   reviewpoint: reviewpoint.value,
-      //   //   imgFile,
-      //   // });
-      //   // console.log(imgFile)
-      //   setModal((pre) => !pre);
-      //   setTextarea('');
-      //   setImgFile('');
-      //   setImgFile('')
-      // } else {
-      //   alert("만족도 평가를 체크해 주세요.")
-      // }
+      const reviewpoint = document.querySelector('input[name="selectstar"]:checked');
+      console.log(reviewpoint);
+      if(token && reviewpoint) {
+        // postproducts({productId,token,nickname,comment:textarea,reviewpoint: reviewpoint.value,imgFile})
+        // console.log({
+        //   productId,
+        //   nickname,
+        //   comment:textarea,
+        //   reviewpoint: reviewpoint.value,
+        //   imgFile,
+        // });
+        // console.log(imgFile)
+
+        const file = selectFile.current.files[0];
+        const formData = new FormData();
+        formData.append("nickname", nickname);
+        formData.append("comment", textarea);
+        formData.append("reviewpoint",  reviewpoint.value);
+        formData.append("image", file);
+        postproducts(formData)
+
+        setModal((pre) => !pre);
+        setTextarea('');
+        setImgFile('');
+        setImgFile('')
+      } else {
+        alert("만족도 평가를 체크해 주세요.")
+      }
   }
 
   
@@ -145,6 +157,21 @@ const resetImgFile = () => {
             <p>만족도</p>
             <div>
               <ul className="starUl">
+                {/* {[1,2,3,4,5].map(el => (
+                  <StarWrap onMouseEnter={()=>setCurrentGrade(el)} className="radioInputStar" isOn={calcStarColor(currentGrade, el)} isHover={calcStarColor(currentHover, el)} >
+                  <label htmlFor={`radio-input${el}`} onClick={()=>setCurrentGrade(el)}>
+                    <input
+                      type="radio"
+                      value={el}
+                      name="selectstar"
+                      id={`radio-input${el}`}
+                    />
+                    <span className="star-icon">
+                      <BsFillStarFill />
+                    </span>
+                  </label>
+                </StarWrap>
+                ))} */}
                 <StarWrap onMouseEnter={()=>setCurrentGrade(1)} className="radioInputStar" isOn={calcStarColor(currentGrade, 1)} isHover={calcStarColor(currentHover, 1)} >
                   <label htmlFor="radio-input1" onClick={()=>setCurrentGrade(1)}>
                     <input
@@ -227,11 +254,13 @@ const resetImgFile = () => {
             )}
             <input
               type="file"
+              accept='image/*'
               style={{ display: "none" }}
               onChange={saveImgFile}
               ref={selectFile} //input에 접근 하기위해 useRef사용
             />
             <button
+              type='button'
               className="photoSelector"
               onClick={() => selectFile.current.click()}
             >
@@ -591,7 +620,7 @@ const Hiddendiv = styled.div`
 // isOn을 Props로 받아서
 const StarWrap = styled.li`
   svg {
-    color: ${({isOn})=> isOn ? '#6BD1F0' : 'lightgrey'};
+    color: ${({isOn})=> isOn ? '#235d6e' : 'lightgrey'};
     color: ${({isHover})=> isHover ? '#82E0FA' : 'lightgrey'};
   }
   &:hover {

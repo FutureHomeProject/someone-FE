@@ -6,6 +6,7 @@ import Cookies from 'universal-cookie'
 import { StyledButton } from './CommenButton'
 import { useNavigate } from 'react-router-dom'
 import { HeaderDiv, NavTop, NavBottom } from '../css/commenCss.jsx'
+import { useMutation } from 'react-query'
 
 export const cookies = new Cookies()
 
@@ -25,6 +26,7 @@ function Header() {
   const onWrite = () => {
     navigate('/house/write')
   }
+
 
   return (
     <>
@@ -79,6 +81,7 @@ function Header() {
                 </div>
                 <div><CgProfile/></div>
                 <div onClick={onsignout}>로그아웃</div>
+                {/* <div onClick={updateTokenFn}>로그인연장</div> */}
                 <div onClick={onWrite}>
                   <StyledButton width="70px" height="40px" color="white" innerText="글쓰기" />
                 </div>
