@@ -23,7 +23,7 @@ export const __postsignin = createAsyncThunk('signin', async (payload, thunkAPI)
     console.log(data.status)
   } catch (error) {
     console.log(error.response)
-  }
+  }}
 )
 
 const initialState = {
