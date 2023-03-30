@@ -13,22 +13,16 @@ export const __postsignup = createAsyncThunk('signup', async (payload, thunkAPI)
   }
 })
 
-
-export const __postsignin = createAsyncThunk(
-  "signin",
-  async(payload, thunkAPI) => {
-    try{
-      console.log(payload);
-      // const data = await api.post(`/users/login`, payload)
-      const data = await axios.post(`http://localhost:4000/signup`, payload)
-      const cookies = new Cookies();
-      cookies.set('token', data.status)
-      console.log(data.status);
-    } 
-    catch (error) {
-      console.log(error.response)
-    }
-
+export const __postsignin = createAsyncThunk('signin', async (payload, thunkAPI) => {
+  try {
+    console.log(payload)
+    // const data = await api.post(`/users/login`, payload)
+    const data = await axios.post(`http://localhost:4000/signup`, payload)
+    const cookies = new Cookies()
+    cookies.set('token', data.status)
+    console.log(data.status)
+  } catch (error) {
+    console.log(error.response)
   }
 )
 

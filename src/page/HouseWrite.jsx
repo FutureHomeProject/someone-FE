@@ -7,7 +7,9 @@ import { BsTextParagraph, BsPencilSquare } from 'react-icons/bs'
 import { SlArrowDown, SlArrowUp } from 'react-icons/sl'
 import { useNavigate } from 'react-router-dom'
 import { HeaderDiv, NavTop } from '../css/commenCss.jsx'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient, QueryClient } from 'react-query'
+import { useCallback } from 'react'
+import { useDropzone } from 'react-dropzone'
 
 const House = () => {
   const navigate = useNavigate()
@@ -47,39 +49,78 @@ const House = () => {
     nickname: '',
     region: '',
     title: '',
+    image: '',
   })
 
   const changeInputHandler = (event) => {
     const { value, name } = event.target
     setHouse((pre) => ({ ...pre, [name]: value }))
   }
+
   const { mutate, isLoading, isSuccess } = useMutation({
     mutationFn: async (payload) => {
       console.log('payload-->', payload)
-      axios.post(`http://43.201.116.11:8080/houses`, payload)
+      axios.post('http://43.201.116.11:8080/houses/write', payload)
     },
     onSuccess: () => {
       window.alert('추가 성공!')
     },
   })
+
+  const queryClient = new QueryClient()
+
+  const uploadImage = async (file) => {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    const response = await axios.post('http://43.201.116.11:8080/houses/write', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+
+    return response.data.url
+  }
+
+  const onDrop = useCallback(
+    async (acceptedFiles) => {
+      const file = acceptedFiles[0]
+
+      const imageUrl = await uploadImage(file)
+
+      queryClient.setQueryData('image', imageUrl)
+    },
+    [queryClient]
+  )
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
+  const { imgMutate } = useMutation(uploadImage)
+
   return (
     <>
-      <HeaderDiv onClick={() => navigate('/')}>
+      <HeaderDiv>
         <NavTop>
-          <div className="logo">누군가의집</div>
+          <div
+            className="logo"
+            onClick={() => {
+              navigate('/')
+            }}
+          >
+            누군가의집
+          </div>
           <div></div>
           <div>
             <StyledButton
               width="150px"
               height="40px"
               color="white"
-              innerText="발행"
+              innerText={isLoading ? '등록중....' : '발행'}
               diabled={isLoading}
               onClick={() => {
                 mutate(house)
               }}
             />
-            {isLoading ? '등록중....' : '추가하기'}
           </div>
         </NavTop>
       </HeaderDiv>
@@ -156,95 +197,9 @@ const House = () => {
                     <div>
                       <ul className="FirstFloorAverage" style={{ display: isChecked1 ? 'block' : 'none' }}>
                         <Span border="1px solid #FF6C6C" focusborder="3px solid #FFB5B5">
-                          <input type="text" />평
+                          <input type="text" name="average" id="average" value={house.average} onChange={changeInputHandler} />평
                         </Span>
-                      </ul>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <Rinput
-                        type="radio"
-                        htmlFor="check-box"
-                        onClick={handleCheck2}
-                        id="contactChoice2"
-                        name="average"
-                        value="secondFloor"
-                      />
-                      2층 단독/협소주택
-                    </div>
-                    <div>
-                      <ul className="SeocondFloorAverage" style={{ display: isChecked2 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="SeocondFloorAverage">연면젹</label>
-                          <Span border="1px solid #FF6C6C" focusborder="3px solid #FFB5B5">
-                            <input className="SeocondFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                      <ul className="SeocondFloorAverage" style={{ display: isChecked2 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="SeocondFloorAverage">1층</label>
-                          <Span border="1px solid black" focusborder="3px solid #BBEDFC">
-                            <input className="SeocondFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                      <ul className="SeocondFloorAverage" style={{ display: isChecked2 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="SeocondFloorAverage">2층</label>
-                          <Span border="1px solid black" focusborder="3px solid #BBEDFC">
-                            <input className="SeocondFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <Rinput
-                        type="radio"
-                        htmlFor="check-box"
-                        style={{ display: 'block' }}
-                        onClick={handleCheck3}
-                        id="contactChoice3"
-                        name="average"
-                        value="thirdFloor"
-                      />
-                      3층 이상 단독/협소주택
-                    </div>
-                    <div>
-                      <ul className="thirdFloorAverage" style={{ display: isChecked3 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="thirdFloorAverage">연면젹</label>
-                          <Span border="1px solid #FF6C6C" focusborder="3px solid #FFB5B5">
-                            <input className="thirdFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                      <ul className="thirdFloorAverage" style={{ display: isChecked3 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="thirdFloorAverage">1층</label>
-                          <Span border="1px solid black" focusborder="3px solid #BBEDFC">
-                            <input className="thirdFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                      <ul className="thirdFloorAverage" style={{ display: isChecked3 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="thirdFloorAverage">2층</label>
-                          <Span border="1px solid black" focusborder="3px solid #BBEDFC">
-                            <input className="thirdFloorAverage" type="text" />평
-                          </Span>
-                        </div>
-                      </ul>
-                      <ul className="thirdFloorAverage" style={{ display: isChecked3 ? 'block' : 'none' }}>
-                        <div>
-                          <label className="thirdFloorAverage">3층</label>
-                          <Span border="1px solid black" focusborder="3px solid #BBEDFC">
-                            <input className="thirdFloorAverage" type="text" />평
-                          </Span>
-                        </div>
+                        {house.average}
                       </ul>
                     </div>
                   </li>
@@ -281,20 +236,27 @@ const House = () => {
         <ImgBox>
           <BoxDiv>
             <button>
-              <div>
-                <p>드래그 앤 드롭이나 추가하기 버튼으로</p>
-                <p> 커버 사진을 업로드 해주세요.</p>
+              <div {...getRootProps()}>
+                <div>
+                  <p>드래그 앤 드롭이나 추가하기 버튼으로</p>
+                  <p> 커버 사진을 업로드 해주세요.</p>
+                </div>
+                <div>
+                  <input {...getInputProps()} value={house.image} name="image" onChange={changeInputHandler} />
+                  <p>
+                    {' '}
+                    <p>
+                      *권장 사이즈
+                      <br />
+                      모바일: 1920 x 1080,최소 1400 x 1400(1:1 비율)
+                      <br />
+                      PC:1920 x 1080,최소 1400 x 787(16:9 비율)
+                    </p>
+                  </p>
+                  {queryClient.getQueryData('image') && <img src={queryClient.getQueryData('image')} alt="preview" />}
+                </div>
+                <div>커버 사진 추가하기</div>
               </div>
-              <div>
-                <p>
-                  *권장 사이즈
-                  <br />
-                  모바일: 1920 x 1080,최소 1400 x 1400(1:1 비율)
-                  <br />
-                  PC:1920 x 1080,최소 1400 x 787(16:9 비율)
-                </p>
-              </div>
-              <div>커버 사진 추가하기</div>
             </button>
           </BoxDiv>
         </ImgBox>
@@ -309,7 +271,14 @@ const House = () => {
           />
           {house.title}
         </TitleBox>
-        <input type="text" name="contents" value={house.contents} onChange={changeInputHandler} />
+        <Hr />
+        <ContentInput
+          type="text"
+          placeholder="내용을 입력해주세요"
+          name="contents"
+          value={house.contents}
+          onChange={changeInputHandler}
+        />
         {house.contents}
       </Article>
     </>
@@ -528,6 +497,11 @@ const BoxDiv = styled.div`
     }
   }
 `
+
+const Hr = styled.hr`
+  width: 80%;
+  background-color: #c5c5c5;
+`
 //글 쓰기 부분
 const TitleBox = styled.div`
   display: block;
@@ -536,12 +510,26 @@ const TitleBox = styled.div`
 `
 const TitleInput = styled.input`
   border: none;
+  margin: 0px auto;
   display: flex;
   justify-content: center;
   margin-top: 40px;
   width: 80%;
   height: 5rem;
   font-size: 36px;
+  ::placeholder {
+    color: #c5c5c5;
+  }
+  :focus {
+    outline: none;
+  }
+`
+const ContentInput = styled.input`
+  display: flex;
+  font-size: 16px;
+  margin: 0px auto;
+  border: none;
+  width: 80%;
   ::placeholder {
     color: #c5c5c5;
   }
