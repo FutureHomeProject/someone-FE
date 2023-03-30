@@ -34,7 +34,7 @@ function House() {
           return (
             <>
               <ListDiv key={house.id} onClick={() => navigate(`/houses/${house.id}`)}>
-                <Img src={house.image} alt={house.title} />
+                <Img src={house.imageUrl} alt={house.title} />
                 <div>{house.title}</div>
                 <div>{house.nickname}</div>
               </ListDiv>
@@ -62,7 +62,6 @@ const ListDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: greenyellow;
 `
 const Img = styled.img`
   width: 30vh;

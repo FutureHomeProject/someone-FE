@@ -73,7 +73,7 @@ const HouseDetail = () => {
         </NavTop>
       </HeaderDiv>
       <div>
-        <img src={data?.image} alt={data?.image} />
+        <Img src={data?.imageUrl} alt={data?.image} />
         <ExDiv>
           <h3>온라인 집들이</h3>
           <h1>{data?.title}</h1>
@@ -84,11 +84,14 @@ const HouseDetail = () => {
             <div>{data?.nickname}</div>
           </ProfileDiv>
           <DeDiv>
+            <div>주거형식 :</div>
             <div>{data?.dwellingtype}</div>
+            <div>평수 :</div>
             <div>{data?.average}</div>
+            <div>지역 :</div>
             <div>{data?.region}</div>
           </DeDiv>
-          <div>{data?.contents}</div>
+          <div style={{ margin: '10px 0px' }}>{data?.contents}</div>
         </ExDiv>
       </div>
       <div style={{ border: '0.5px solid #d0d5d8', width: '64%', margin: '0px auto' }}></div>
@@ -149,6 +152,7 @@ const DeDiv = styled.div`
   margin-top: 30px;
   background-color: #f6f7f9;
   display: flex;
+  gap: 10px;
 `
 const InputDiv = styled.div`
   display: flex;
@@ -202,7 +206,12 @@ const CommentDiv = styled.div`
     cursor: pointer;
   }
 `
-
+const Img = styled.img`
+  width: 45vh;
+  display: flex;
+  justify-content: center;
+  margin: 0px auto;
+`
 const NickDiv = styled.div`
   font-weight: 900;
 `

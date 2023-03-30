@@ -1,22 +1,22 @@
-import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
-import ImageSlider from '../components/Slider';
-import Products from '../components/Products';
-import { useQuery } from 'react-query';
-import { getproducts } from '../redux/modules/productsAPI';
-import styled from 'styled-components';
-import { keys } from '../utils/createQueryKey';
+import React from 'react'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import ImageSlider from '../components/Slider'
+import Products from '../components/Products'
+import { useQuery } from 'react-query'
+import { getproducts } from '../redux/modules/productsAPI'
+import styled from 'styled-components'
+import { keys } from '../utils/createQueryKey'
 
 function Main() {
-  // const { data, isLoading, isError } = useQuery(keys.GET_PODUCT, getproducts);
+  // const { data, isLoading, isError } = useQuery(keys.GET_PODUCT, getproducts)
   // console.log(data?.data.data)
   // if (isLoading) {
-  //   return (<div>로딩 중....</div>)
+  //   return <div>로딩 중....</div>
   // }
 
   // if (isError) {
-  //   return (<div>에러가 발생했습니다.</div>)
+  //   return <div>에러가 발생했습니다.</div>
   // }
 
   return (
@@ -34,7 +34,7 @@ function Main() {
             price="2,359,000"
             review="리뷰 747"
           />
-           <Products
+          <Products
             id="2"
             title="LG전자"
             name="[오늘의딜] 트롬 워시타워 W20WAN 세탁23kg 건조20kg"
@@ -42,7 +42,7 @@ function Main() {
             price="2,359,000"
             review="리뷰 747"
           />
-           <Products
+          <Products
             id="3"
             title="LG전자"
             name="[오늘의딜] 트롬 워시타워 W20WAN 세탁23kg 건조20kg"
@@ -59,22 +59,21 @@ function Main() {
             review="리뷰 747"
           />
           <Products
-             id="5"
+            id="5"
             title="LG전자"
             name="[오늘의딜] 트롬 워시타워 W20WAN 세탁23kg 건조20kg"
             sale="46%"
             price="2,359,000"
             review="리뷰 747"
           />
-          
         </Article>
       </div>
       <Footer />
     </>
-  );
+  )
 }
 
-export default Main;
+export default Main
 
 const Article = styled.article`
   padding: 20px 60px;
@@ -87,7 +86,6 @@ const Article = styled.article`
   justify-content: flex-start;
   gap: 20px;
 `
-
 
 // import React from 'react'
 // import Header from "../components/Header";
@@ -105,8 +103,7 @@ const Article = styled.article`
 //   if(isLoading || isError) {
 //     return <div>로딩 중....</div>
 //   }
-  
-  
+
 //   return (
 //     <>
 //     <Header/>
@@ -115,7 +112,7 @@ const Article = styled.article`
 //       <Products/>
 //     </div>
 //     <Footer />
-//   </>  
+//   </>
 //   )
 // }
 
