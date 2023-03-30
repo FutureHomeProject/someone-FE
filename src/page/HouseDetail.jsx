@@ -60,6 +60,7 @@ const HouseDetail = () => {
   })
   const token = cookies.get('token')
   const { nickname } = jwt_decode(token)
+  //token에 담겨있는 닉네임 정보를 꺼내오는 것 ! 굳굳
 
   return (
     <>
