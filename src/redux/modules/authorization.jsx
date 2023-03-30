@@ -24,7 +24,7 @@ export const __postsignin = createAsyncThunk('signin', async (payload, thunkAPI)
   } catch (error) {
     console.log(error.response)
   }
-})
+)
 
 const initialState = {
   isLoding: false,

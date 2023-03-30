@@ -6,9 +6,10 @@ import Products from '../components/Products';
 import { useQuery } from 'react-query';
 import { getproducts } from '../redux/modules/productsAPI';
 import styled from 'styled-components';
+import { keys } from '../utils/createQueryKey';
 
 function Main() {
-  // const { data, isLoading, isError } = useQuery('products', getproducts);
+  // const { data, isLoading, isError } = useQuery(keys.GET_PODUCT, getproducts);
   // console.log(data?.data.data)
   // if (isLoading) {
   //   return (<div>로딩 중....</div>)

@@ -3,4 +3,5 @@ export const keys = {
   GET_HOUSE: ['GET_HOUSE'],
   GET_CMT: ['GET_CMT'],
   GET_CMTS: ['GET_CMTS'],
+  GET_PODUCT : ['products']
 }

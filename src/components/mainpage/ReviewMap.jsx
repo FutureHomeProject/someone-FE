@@ -19,6 +19,7 @@ function ReviewMap({comments}) {
   const emptystars = []
   const token = cookies.get("token")
   const {nickname} = jwt_decode(token);
+  console.log(comments.image)
   for(let i = 0; i < Math.round(starsCount);i++) {
     stars.push(<BsFillStarFill key={i}/>)
   }
@@ -81,9 +82,9 @@ function ReviewMap({comments}) {
       <PuductsName>{comments.name}</PuductsName>
       <p>
         <img
-          src={products1}
+          src={comments.image}
           alt=""
-          width="100"
+          height="100px"
           style={{ borderRadius: "10px" }}
         />
       </p>
